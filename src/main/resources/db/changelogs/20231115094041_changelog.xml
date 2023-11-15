@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="Youcode (generated)" id="1700041246226-1">
+        <dropDefaultValue columnDataType="varchar(255)" columnName="Email" tableName="User"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1700041246226-2">
+        <dropDefaultValue columnDataType="varchar(255)" columnName="name" tableName="Category"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1700041246226-3">
+        <dropDefaultValue columnDataType="varchar(255)" columnName="password" tableName="User"/>
+    </changeSet>
+    <changeSet author="Youcode (generated)" id="1700041246226-4">
+        <dropDefaultValue columnDataType="varchar(255)" columnName="user_name" tableName="User"/>
+    </changeSet>
+</databaseChangeLog>
