@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
@@ -18,7 +19,7 @@ public class Equipment {
     @ManyToOne
     private Manufactorer manufactorer;
     @OneToMany(mappedBy = "equipment")
-    private Collection<EquipmentMatricule> equipmentMatricule;
+    private Set<EquipmentMatricule> equipmentMatricule;
     @ManyToOne
     private Category category;
 }

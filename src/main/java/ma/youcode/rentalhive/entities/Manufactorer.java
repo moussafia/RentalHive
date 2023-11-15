@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,5 @@ public class Manufactorer {
     private Long id;
     private String manufactorer;
     @OneToMany(mappedBy = "manufactorer")
-    private Collection<Equipment> equipment;
+    private Set<Equipment> equipment;
 }

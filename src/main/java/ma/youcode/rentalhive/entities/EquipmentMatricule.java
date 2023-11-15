@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,6 +26,6 @@ public class EquipmentMatricule {
             joinColumns = @JoinColumn(name = "Equipmentmatricule_id"),
             inverseJoinColumns = @JoinColumn(name = "demande_id")
     )
-    private Collection<Contract> contracts;
+    private Set<Contract> contracts;
 
 }

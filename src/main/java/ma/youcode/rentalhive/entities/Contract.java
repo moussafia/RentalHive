@@ -7,6 +7,7 @@ import ma.youcode.rentalhive.entities.enums.Status;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class Contract {
     private Status status;
     private Float price;
     @ManyToMany(mappedBy ="contracts")
-    private Collection<EquipmentMatricule> equipmentMatricules;
+    private Set<EquipmentMatricule> equipmentMatricules;
     @OneToOne
     private Demande demande;
 }

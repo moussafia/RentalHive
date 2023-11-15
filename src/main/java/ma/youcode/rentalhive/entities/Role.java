@@ -7,8 +7,11 @@ import ma.youcode.rentalhive.entities.enums.TypeRoles;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Role {
     @Id
@@ -16,5 +19,5 @@ public class Role {
     private Long id;
     private TypeRoles name;
     @OneToMany(mappedBy = "role")
-    private Collection<User> user;
+    private Set<User> user;
 }

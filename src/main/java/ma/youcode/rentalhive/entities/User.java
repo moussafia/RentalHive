@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
 public class User {
@@ -21,5 +23,5 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    private Collection<Demande> demandesCollection;
+    private Set<Demande> demandesCollection;
 }
