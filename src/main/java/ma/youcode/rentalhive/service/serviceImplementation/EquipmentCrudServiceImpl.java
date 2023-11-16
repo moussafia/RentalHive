@@ -12,6 +12,8 @@ import ma.youcode.rentalhive.service.EquipmentCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     private EquipmentMatriculeDao equipmentMatriculeDao;
@@ -31,8 +33,10 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     public EquipmentCrudServiceImpl(){}
 
     @Override
-    public EquipmentMatricule createEquipment(EquipmentMatricule Equipment) {
-
+    public EquipmentMatricule createEquipment(EquipmentMatricule matricule,
+                                              Equipment equipment,
+                                              Category category,
+                                              Manufactorer manufactorer) {
         return null;
     }
 
@@ -52,5 +56,14 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     public EquipmentMatricule historicForEquipment(EquipmentMatricule Equipment) {
 
         return null;
+    }
+    public void validateCategory(Category category){
+
+    }
+    public void validateManufactorer(Manufactorer manufactorer){
+    }
+    public void validateEquipment(Equipment equipment){
+    }
+    public void validateEquipmentMatricule(EquipmentMatricule equipmentMatricule){
     }
 }
