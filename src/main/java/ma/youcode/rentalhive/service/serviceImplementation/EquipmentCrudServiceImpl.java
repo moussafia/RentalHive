@@ -1,8 +1,11 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
+import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.EquipmentCrudService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     @Override
     public EquipmentMatricule createEquipment(EquipmentMatricule Equipment) {
@@ -10,7 +13,7 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     }
 
     @Override
-    public EquipmentMatricule updateEquipment(EquipmentMatricule Equipment) {
+    public Equipment updateEquipment(Equipment Equipment) {
         return null;
     }
 
