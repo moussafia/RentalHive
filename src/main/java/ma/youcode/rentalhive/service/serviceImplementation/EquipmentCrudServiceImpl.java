@@ -8,6 +8,8 @@ import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.EquipmentCrudService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     private EquipmentMatriculeDao equipmentMatriculeDao;
@@ -33,8 +35,17 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     }
 
     @Override
-    public EquipmentMatricule updateEquipment(Equipment equipment) {
-        return null;
+    public EquipmentMatricule updateEquipment(Long id, EquipmentMatricule equipment) {
+        EquipmentMatricule updatedEquipment = equipmentMatriculeDao.findById(id).get();
+        updatedEquipment.setId(id);
+        updatedEquipment.getEquipment().setName(equipment.getEquipment().getName());
+        updatedEquipment.getEquipment().setQuantity(equipment.getEquipment().getQuantity());
+        updatedEquipment.getEquipment().setCategory(equipment.getEquipment().getCategory());
+        updatedEquipment.getEquipment().setEquipmentMatricule(equipment.getEquipment().getEquipmentMatricule());
+        updatedEquipment.getEquipment().setManufactorer(equipment.getEquipment().getManufactorer());
+        updatedEquipment.getEquipment().setPricePerDay(equipment.getEquipment().getPricePerDay());
+
+        return equipmentMatriculeDao.save(updatedEquipment);
     }
 
     @Override
@@ -47,5 +58,9 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     public EquipmentMatricule historicForEquipment(EquipmentMatricule Equipment) {
 
         return null;
+    }
+
+    public Optional<Equipment> findById(Long id) {
+        return equipmentDao.findById(id);
     }
 }

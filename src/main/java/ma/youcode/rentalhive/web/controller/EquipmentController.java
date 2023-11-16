@@ -1,11 +1,31 @@
 package ma.youcode.rentalhive.web.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import ma.youcode.rentalhive.entities.Equipment;
+import ma.youcode.rentalhive.entities.EquipmentMatricule;
+import ma.youcode.rentalhive.service.serviceImplementation.EquipmentCrudServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(value = "/Equipment", produces="application/json")
+@RequestMapping(value = "/api", produces="application/json")
 public class EquipmentController {
+    @Autowired
+    EquipmentCrudServiceImpl equipmentService;
+
+    @PutMapping("/equipment/{id}")
+    public ResponseEntity updateEquipment(@PathVariable("id") long id, @RequestBody Equipment equipment) {
+        Optional<Equipment> equipment1 = equipmentService.findById(id);
+
+        if (equipment1.isPresent()) {
+            return new ResponseEntity<>(equipment1.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

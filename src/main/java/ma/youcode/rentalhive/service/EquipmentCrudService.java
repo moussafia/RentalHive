@@ -5,7 +5,9 @@ import ma.youcode.rentalhive.entities.EquipmentMatricule;
 
 public interface EquipmentCrudService {
     EquipmentMatricule createEquipment(EquipmentMatricule Equipment);
-    EquipmentMatricule updateEquipment(Equipment Equipment);
+
+    EquipmentMatricule updateEquipment(Long id, EquipmentMatricule equipment);
+
     EquipmentMatricule searchEquipmentDisponible(EquipmentMatricule Equipment);
     EquipmentMatricule historicForEquipment(EquipmentMatricule Equipment);
 
