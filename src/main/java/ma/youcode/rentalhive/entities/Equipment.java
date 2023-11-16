@@ -22,4 +22,6 @@ public class Equipment {
     private Set<EquipmentMatricule> equipmentMatricule;
     @ManyToOne
     private Category category;
+
+
 }
