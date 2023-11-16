@@ -15,7 +15,7 @@ public class EquipmentController {
 
 
     @PostMapping("/update")
-    public Equipment save(@RequestBody @Valid Equipment equipment) {
+    public Equipment update(@RequestBody @Valid Equipment equipment) {
         return equipementService.updateEquipment(equipment);
     }
 }
