@@ -1,5 +1,9 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
+import ma.youcode.rentalhive.dao.CategoryDao;
+import ma.youcode.rentalhive.dao.EquipmentDao;
+import ma.youcode.rentalhive.dao.EquipmentMatriculeDao;
+import ma.youcode.rentalhive.dao.ManufactoreDao;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
@@ -10,21 +14,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EquipmentCrudServiceImpl implements EquipmentCrudService {
-    private EquipmentMatricule equipmentMatricule;
-    private Equipment equipment;
-    private Category category;
-    private Manufactorer manufactorer;
-
-    @Autowired
-    public EquipmentCrudServiceImpl(EquipmentMatricule equipmentMatricule,
-                                    Equipment equipment,
-                                    Category category,
-                                    Manufactorer manufactorer) {
-        this.equipmentMatricule = equipmentMatricule;
-        this.equipment = equipment;
-        this.category = category;
-        this.manufactorer = manufactorer;
+    private EquipmentMatriculeDao equipmentMatriculeDao;
+    private EquipmentDao equipmentDao;
+    private CategoryDao categoryDao;
+    private ManufactoreDao manufactoreDao;
+    public EquipmentCrudServiceImpl(EquipmentMatriculeDao equipmentMatriculeDao,
+                                    EquipmentDao equipmentDao,
+                                    CategoryDao categoryDao,
+                                    ManufactoreDao manufactoreDao) {
+        this.equipmentMatriculeDao = equipmentMatriculeDao;
+        this.equipmentDao = equipmentDao;
+        this.categoryDao = categoryDao;
+        this.manufactoreDao = manufactoreDao;
     }
+
     public EquipmentCrudServiceImpl(){}
 
     @Override
