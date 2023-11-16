@@ -12,6 +12,7 @@ public interface EquipmentMatriculesService {
     List<EquipmentMatricule> ShowAllEquipmentMatricule();
     EquipmentMatricule searchEquipementMatricule(EquipmentMatricule equipmentMatricule);
     EquipmentMatricule historicForEquipment(EquipmentMatricule matricule);
+    EquipmentMatricule validateEquipmentMatricule(EquipmentMatricule matricule);
 
 
 }

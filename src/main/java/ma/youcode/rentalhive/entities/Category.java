@@ -18,4 +18,5 @@ public class Category {
     private String name;
     @OneToMany(mappedBy = "category")
     private Set<Equipment> equipment;
+
 }

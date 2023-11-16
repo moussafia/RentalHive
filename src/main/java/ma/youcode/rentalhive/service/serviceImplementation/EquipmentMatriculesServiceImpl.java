@@ -38,4 +38,9 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
     public EquipmentMatricule historicForEquipment(EquipmentMatricule matricule) {
         return null;
     }
+
+    @Override
+    public EquipmentMatricule validateEquipmentMatricule(EquipmentMatricule matricule) {
+        return null;
+    }
 }
