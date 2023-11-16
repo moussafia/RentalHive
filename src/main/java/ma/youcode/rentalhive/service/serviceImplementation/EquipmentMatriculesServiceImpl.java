@@ -3,9 +3,11 @@ package ma.youcode.rentalhive.service.serviceImplementation;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesService {
     @Override
     public EquipmentMatricule saveEquipmentMatricule(Equipment equipment) {

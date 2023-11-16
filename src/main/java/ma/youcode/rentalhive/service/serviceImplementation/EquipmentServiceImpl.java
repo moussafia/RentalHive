@@ -8,10 +8,11 @@ import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.Manufactorer;
 import ma.youcode.rentalhive.service.EquipmentService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
 public class EquipmentServiceImpl implements EquipmentService {
     private EquipmentMatriculeDao equipmentMatriculeDao;
     private EquipmentDao equipmentDao;
@@ -26,6 +27,10 @@ public class EquipmentServiceImpl implements EquipmentService {
         this.categoryDao = categoryDao;
         this.manufactoreDao = manufactoreDao;
     }
+
+    public EquipmentServiceImpl() {
+    }
+
     @Override
     public Equipment createEquipment(Equipment equipment,
                                      Category category,
