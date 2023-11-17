@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface manufactoreDao extends JpaRepository<Manufactorer, Long> {
+public interface ManufactoreDao extends JpaRepository<Manufactorer, Long> {
 }

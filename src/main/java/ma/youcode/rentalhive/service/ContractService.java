@@ -7,6 +7,7 @@ import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import java.util.List;
 
 public interface ContractService {
-    Contract requestLocationEquipment(List<EquipmentMatricule> equipmentMatricule);
+    Contract createContarct(Demande demande ,
+            List<EquipmentMatricule> equipmentMatricule);
     Contract updateContract(Contract contract);
 }
