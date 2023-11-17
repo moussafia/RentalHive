@@ -53,7 +53,12 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
         return null;
     }
 
+<<<<<<< HEAD
     public Optional<EquipmentMatricule> findById(long id) {
         return equipmentMatriculeDao.findById(id);
     }
+=======
+    @Override
+    public void validateEquipmentMatricule(EquipmentMatricule matricule) {}
+>>>>>>> main
 }

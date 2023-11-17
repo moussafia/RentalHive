@@ -4,7 +4,6 @@ import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EquipmentMatriculesService {
     EquipmentMatricule saveEquipmentMatricule(Equipment equipment);
@@ -13,4 +12,5 @@ public interface EquipmentMatriculesService {
     List<EquipmentMatricule> ShowAllEquipmentMatricule();
     EquipmentMatricule searchEquipementMatricule(EquipmentMatricule equipmentMatricule);
     EquipmentMatricule historicForEquipment(EquipmentMatricule matricule);
+    void validateEquipmentMatricule(EquipmentMatricule matricule);
 }
