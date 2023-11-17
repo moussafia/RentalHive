@@ -105,4 +105,5 @@ class EquipmentServiceImplTest {
                                 manufactorer.getManufactorer()))
                 .thenThrow(RuntimeException.class);
     }
+
 }

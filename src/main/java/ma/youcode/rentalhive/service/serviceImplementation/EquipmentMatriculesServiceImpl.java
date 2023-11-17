@@ -40,7 +40,5 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
     }
 
     @Override
-    public EquipmentMatricule validateEquipmentMatricule(EquipmentMatricule matricule) {
-        return null;
-    }
+    public void validateEquipmentMatricule(EquipmentMatricule matricule) {}
 }
