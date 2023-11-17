@@ -67,7 +67,8 @@ class EquipmentMatriculesServiceImplTest {
 
     private EquipmentMatricule createSampleEquipmentMatricule(String name) {
         EquipmentMatricule equipmentMatricule = new EquipmentMatricule();
-        equipmentMatricule.setEquipment(new Equipment(name, 5, "Category", "Matricule", "Manufacturer", 10.0));
+        equipmentMatricule.setMatricule("ABC123");
+        equipmentMatricule.setEquipment(new Equipment(1, "Trax", ));
         return equipmentMatricule;
     }
 }

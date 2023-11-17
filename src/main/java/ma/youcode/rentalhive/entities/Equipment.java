@@ -23,5 +23,4 @@ public class Equipment {
     @ManyToOne
     private Category category;
 
-
 }
