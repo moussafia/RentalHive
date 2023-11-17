@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface EquipmentDao extends JpaRepository<Equipment, Long> {
-    @Override
-    Optional<Equipment> findById(Long aLong);
 }

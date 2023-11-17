@@ -2,7 +2,7 @@ package ma.youcode.rentalhive.web.controller;
 
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
-import ma.youcode.rentalhive.service.serviceImplementation.EquipmentCrudServiceImpl;
+import ma.youcode.rentalhive.service.serviceImplementation.EquipmentMatriculesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.Optional;
 @RequestMapping(value = "/api", produces="application/json")
 public class EquipmentController {
     @Autowired
-    EquipmentCrudServiceImpl equipmentService;
+    EquipmentMatriculesServiceImpl equipmentMatriculesService;
 
     @PutMapping("/equipment/{id}")
-    public ResponseEntity updateEquipment(@PathVariable("id") long id, @RequestBody Equipment equipment) {
-        Optional<Equipment> equipment1 = equipmentService.findById(id);
+    public ResponseEntity updateEquipment(@PathVariable("id") long id, @RequestBody EquipmentMatricule equipment) {
+        Optional<EquipmentMatricule> equipment1 = equipmentMatriculesService.findById(id);
 
         if (equipment1.isPresent()) {
             return new ResponseEntity<>(equipment1.get(), HttpStatus.OK);
