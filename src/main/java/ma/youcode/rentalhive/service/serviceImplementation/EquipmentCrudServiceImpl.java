@@ -15,7 +15,6 @@ public class EquipmentCrudServiceImpl implements EquipmentCrudService {
     private Category category;
     private Manufactorer manufactorer;
 
-    @Autowired
     public EquipmentCrudServiceImpl(EquipmentMatricule equipmentMatricule,
                                     Equipment equipment,
                                     Category category,
