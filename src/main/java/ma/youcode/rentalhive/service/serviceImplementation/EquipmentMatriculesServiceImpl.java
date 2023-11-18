@@ -6,6 +6,7 @@ import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,6 @@ import java.util.List;
 public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesService {
     private EquipmentMatriculeDao equipmentMatriculeDao;
 
-    @Autowired
     public EquipmentMatriculesServiceImpl(EquipmentMatriculeDao equipmentMatriculeDao) {
         this.equipmentMatriculeDao = equipmentMatriculeDao;
     }

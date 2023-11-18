@@ -7,6 +7,7 @@ import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class EquipmentServiceImplTest {
 
@@ -27,12 +29,16 @@ class EquipmentServiceImplTest {
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
     private EquipmentService equipmentService;
+    private EquipmentService equipmentServiceMocked;
     @BeforeEach
     void setUp() {
         equipmentDao = Mockito.mock(EquipmentDao.class);
-        categoryService = Mockito.mock(CategoryService.class);
-        manufactorerService = Mockito.mock(ManufactorerService.class);
+        categoryService = Mockito.mock(CategoryServiceImpl.class);
+        manufactorerService = Mockito.mock(ManufactorerServiceImpl.class);
         equipmentService = new EquipmentServiceImpl();
+        equipmentServiceMocked = mock(EquipmentServiceImpl.class);
+
+
     }
     Category createCategory(){
         Category category = new Category();
@@ -50,28 +56,22 @@ class EquipmentServiceImplTest {
         Equipment equipment = new Equipment();
         equipment.setName("excavatrices");
         equipment.setPricePerDay(10000.30F);
-        equipment.setQuantity(null);
+        equipment.setQuantity(30); //check again
+        Category category1 = new Category();
+        category1.setId(1L);
+        equipment.setCategory(category1);
         return equipment;
     }
     @Test
     void testCreateEquipmentForCategoryNotExistAndThrowException(){
         Equipment equipment = createEquipment();
-        Mockito.when(equipmentService.checkEquipmentIfExist(equipment.getName()))
-                .thenReturn(null);
-
-        Category category = createCategory();
-        Category category1 = new Category();
-        category1.setId(1L);
-        equipment.setCategory(category1);
+        doNothing().when(equipmentServiceMocked).checkEquipmentIfExist(equipment.getName());
         Mockito.when(equipmentService.checkCategoryIfExistForCreateEquipment(equipment.getCategory().getId()))
-                .thenReturn(null);
-
-        Manufacturer manufactorer = createManufactorer();
-
+                .thenThrow(RuntimeException.class);
         Mockito.when(equipmentService.createEquipment(equipment))
-                .thenThrow(IllegalArgumentException.class);
+                .thenThrow(RuntimeException.class);
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 ()->equipmentService.createEquipment(equipment),
                 "should valid category in case not exist in database"
         );
@@ -79,37 +79,26 @@ class EquipmentServiceImplTest {
     @Test
     void testCreateEquipmentForPreExistingEquipmentAndThrowException(){
         Equipment equipment = createEquipment();
-        Mockito.when(equipmentService.checkEquipmentIfExist(equipment.getName()))
-                .thenReturn(
-                        Optional.of(equipment));
-
-        Category category = createCategory();
-
-        Manufacturer manufactorer = createManufactorer();
-
+        doThrow(new RuntimeException()).when(equipmentServiceMocked)
+                .checkEquipmentIfExist(equipment.getName());
         Mockito.when(equipmentService
                         .createEquipment(equipment))
                 .thenThrow(RuntimeException.class);
         assertThrows(RuntimeException.class,
                 ()->equipmentService.createEquipment(equipment),
                 "should valid case when equipment is already exist");
-
     }
     @Test
     void testCreateEquipmentSuccess(){
         Equipment equipment = createEquipment();
-        Mockito.when(equipmentService.checkEquipmentIfExist(equipment.getName()))
-                .thenReturn(null);
-
+        doNothing().when(equipmentServiceMocked).checkEquipmentIfExist(equipment.getName());
         Category category = createCategory();
         Mockito.when(equipmentService.checkCategoryIfExistForCreateEquipment(1L))
-                .thenReturn(null);
-
+                .thenReturn(category);
         Manufacturer manufacturer = createManufactorer();
-
         Mockito.when(equipmentService.
                         fetshOrCreateEquipmentManufactorer(manufacturer.getManufacturer()))
-                .thenReturn(Optional.of(manufacturer));
+                .thenReturn(manufacturer);
         Mockito.when(equipmentService
                         .createEquipment(equipment))
                 .thenAnswer(invocationOnMock -> {

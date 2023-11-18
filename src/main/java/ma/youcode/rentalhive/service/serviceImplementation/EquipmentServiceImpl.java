@@ -1,5 +1,6 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
+import liquibase.pro.packaged.M;
 import ma.youcode.rentalhive.dao.EquipmentDao;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
@@ -7,6 +8,8 @@ import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,9 +35,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public Equipment createEquipment(Equipment equipment) {
-
-
-        return null;
+        checkEquipmentIfExist(equipment.getName());
+        Category category = checkCategoryIfExistForCreateEquipment(equipment.getCategory().getId());
+        Manufacturer manufacturer = fetshOrCreateEquipmentManufactorer(equipment.getManufacturer().getManufacturer());
+        equipment.setCategory(category);
+        equipment.setManufacturer(manufacturer);
+        validateEquipment(equipment);
+        return equipmentDao.save(equipment);
     }
 
     @Override
@@ -48,24 +55,42 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Optional<Equipment> checkEquipmentIfExist(String name) {
-        return Optional.empty();
+    public void checkEquipmentIfExist(String name) {
+        Optional<Equipment> equipment = equipmentDao.findByName(name);
+        if(equipment.isPresent()){
+            throw new RuntimeException("equipment already exist if just do update");
+        }
     }
 
     @Override
-    public Optional<Category> checkCategoryIfExistForCreateEquipment(Long category_id) {
-        return Optional.empty();
+    public Category checkCategoryIfExistForCreateEquipment(Long category_id) {
+        Optional<Category> category = categoryService.searchCategory(category_id);
+        if(category.isPresent()){
+            return category.get();
+        }
+       throw new RuntimeException("category does not exist");
     }
-
     @Override
-    public void validateEquipment() {
-
+    public Manufacturer fetshOrCreateEquipmentManufactorer(String manufacturer_name) {
+        Optional<Manufacturer> manufacturerSearched = manufactorerService.searchManufactorer(manufacturer_name);
+        if(manufacturerSearched.isPresent()){
+            return manufacturerSearched.get();
+        }
+        Manufacturer manufacturer1 = new Manufacturer();
+        manufacturer1.setManufacturer(manufacturer_name);
+        return manufactorerService.createManufactorer(manufacturer1);
     }
-
     @Override
-    public Optional<Manufacturer> fetshOrCreateEquipmentManufactorer(String manufactorer) {
-        return Optional.empty();
+    public void validateEquipment(Equipment equipment) {
+        if(equipment.getName().isEmpty() || equipment.getName().isBlank() || equipment.getName() == null)
+            throw new IllegalArgumentException("name of equipment is null or blank or empty");
+        if(equipment.getPricePerDay().toString().isEmpty() || equipment.getPricePerDay().toString().isBlank() || equipment.getPricePerDay() == null)
+            throw new IllegalArgumentException("name of equipment is null or blank or empty");
+        if(equipment.getQuantity().toString().isEmpty() || equipment.getQuantity().toString().isBlank() || equipment.getQuantity() == null)
+            throw new IllegalArgumentException("name of equipment is null or blank or empty");
+        if(equipment.getCategory().toString().isEmpty() || equipment.getCategory().toString().isBlank() || equipment.getCategory() == null)
+            throw new IllegalArgumentException("name of equipment is null or blank or empty");
+        if(equipment.getManufacturer().toString().isEmpty() || equipment.getManufacturer().toString().isBlank() || equipment.getManufacturer() == null)
+            throw new IllegalArgumentException("name of equipment is null or blank or empty");
     }
-
-
 }

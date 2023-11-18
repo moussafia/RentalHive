@@ -3,6 +3,7 @@ package ma.youcode.rentalhive.service.serviceImplementation;
 import ma.youcode.rentalhive.dao.CategoryDao;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.service.CategoryService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

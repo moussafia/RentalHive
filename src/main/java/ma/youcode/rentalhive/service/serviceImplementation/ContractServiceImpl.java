@@ -4,6 +4,7 @@ import ma.youcode.rentalhive.entities.Contract;
 import ma.youcode.rentalhive.entities.Demande;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.ContractService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
