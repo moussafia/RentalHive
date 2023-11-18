@@ -15,10 +15,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-@Service @AllArgsConstructor
+@Service
 public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesService {
     private EquipmentMatriculeDao equipmentMatriculeDao;
     private EquipmentService equipmentService;
+@Autowired
+    public EquipmentMatriculesServiceImpl(EquipmentMatriculeDao equipmentMatriculeDao, EquipmentService equipmentService) {
+        this.equipmentMatriculeDao = equipmentMatriculeDao;
+        this.equipmentService = equipmentService;
+    }
 
     public EquipmentMatriculesServiceImpl() {
     }
@@ -31,6 +36,7 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
             EquipmentMatricule matricule = new EquipmentMatricule();
             matricule.setMatricule(matriculeUUID);
             matricule.setEquipment(equipmentSaved);
+            equipmentMatriculeDao.save(matricule);
         }
         return equipmentSaved;
     }

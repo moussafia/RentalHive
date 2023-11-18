@@ -3,6 +3,7 @@ package ma.youcode.rentalhive.service.serviceImplementation;
 import ma.youcode.rentalhive.dao.CategoryDao;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryDao categoryDao;
 
+    @Autowired
     public CategoryServiceImpl(CategoryDao categoryDao) {
 
         this.categoryDao = categoryDao;

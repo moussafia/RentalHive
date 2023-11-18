@@ -22,6 +22,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
 
+    @Autowired
     public EquipmentServiceImpl(EquipmentDao equipmentDao,
                                 CategoryService categoryService,
                                 ManufactorerService manufactorerService) {
