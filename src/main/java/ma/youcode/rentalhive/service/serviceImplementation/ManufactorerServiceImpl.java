@@ -33,7 +33,7 @@ public class ManufactorerServiceImpl implements ManufactorerService {
         Manufacturer manufacturer = new Manufacturer();
         manufacturer.setManufacturer(manufacturer_name);
         validateManufacturerName(manufacturer);
-        return manufactoreDao.findByManufactorer(manufacturer_name);
+        return manufactoreDao.findByManufacturer(manufacturer_name);
     }
 
     @Override

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ManufactoreDao extends JpaRepository<Manufacturer, Long> {
-    Optional<Manufacturer> findByManufactorer(String manufactorer_name);
+    Optional<Manufacturer> findByManufacturer(String manufactorer_name);
 }

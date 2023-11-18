@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public interface EquipmentService {
 
     Equipment createEquipment(Equipment equipment);

@@ -6,7 +6,6 @@ import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 
 public interface ContractService {
     Contract createContarct(Demande demande ,

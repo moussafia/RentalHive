@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+
 public interface ManufactorerService {
     Manufacturer createManufactorer(Manufacturer manufactorer);
     Optional<Manufacturer> searchManufactorer(String manufactorer_name);
