@@ -1,10 +1,7 @@
 package ma.youcode.rentalhive.dto;
 
 import lombok.*;
-import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.EquipmentMatricule;
-import ma.youcode.rentalhive.entities.Manufacturer;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -22,15 +19,21 @@ public class EquipmentDto implements Serializable {
     @NotEmpty(message = "name should not be empty")
     @NotBlank(message = "name should not be blank")
     String name;
+    @NotEmpty(message = "name should not be empty")
+    @NotBlank(message = "name should not be blank")
     @PositiveOrZero
     Integer quantity;
+    @NotEmpty(message = "name should not be empty")
+    @NotBlank(message = "name should not be blank")
     @NotNull
     Float pricePerDay;
-    Manufacturer manufacturer;
-    @Getter
-    Set<EquipmentMatricule> equipmentMatricule;
-    Category category;
-    public void setEquipmentMatricule(EquipmentMatricule equipmentMatricule) {
-        this.equipmentMatricule.add(equipmentMatricule);
-    }
+    @NotEmpty(message = "name should not be empty")
+    @NotBlank(message = "name should not be blank")
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+")
+    String manufacturerName;
+    @NotEmpty(message = "name should not be empty")
+    @NotBlank(message = "name should not be blank")
+    @NotNull
+    Long category_id;
 }

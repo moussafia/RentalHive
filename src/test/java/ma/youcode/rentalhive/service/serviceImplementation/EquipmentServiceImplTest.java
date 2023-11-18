@@ -65,7 +65,9 @@ class EquipmentServiceImplTest {
     @Test
     void testCreateEquipmentForCategoryNotExistAndThrowException(){
         Equipment equipment = createEquipment();
-        doNothing().when(equipmentServiceMocked).checkEquipmentIfExist(equipment.getName());
+        doNothing().when(equipmentServiceMocked)
+                .checkEquipmentIfExist(equipment.getName());
+        equipment.getCategory().setId(1L);
         Mockito.when(equipmentServiceMocked.checkCategoryIfExistForCreateEquipment(equipment.getCategory().getId()))
                 .thenThrow(RuntimeException.class);
         Mockito.when(equipmentServiceMocked.createEquipment(equipment))
