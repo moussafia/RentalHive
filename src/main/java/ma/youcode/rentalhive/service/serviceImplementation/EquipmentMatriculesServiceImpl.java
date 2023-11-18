@@ -52,13 +52,9 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
     public EquipmentMatricule historicForEquipment(EquipmentMatricule matricule) {
         return null;
     }
-
-<<<<<<< HEAD
     public Optional<EquipmentMatricule> findById(long id) {
         return equipmentMatriculeDao.findById(id);
     }
-=======
     @Override
     public void validateEquipmentMatricule(EquipmentMatricule matricule) {}
->>>>>>> main
 }
