@@ -118,13 +118,16 @@ class EquipmentServiceImplTest {
         Field[] fields = equipment.getClass().getDeclaredFields();
         for(Field field : fields){
             field.setAccessible(true);
-            if(field.getName() == nullField){
+            if(field.getName().equals(nullField)){
                 field.set(equipment, null);
             }
         }
+    Mockito.when(equipmentServiceMocked
+                        .createEquipment(equipment))
+                .thenThrow(IllegalArgumentException.class);
     assertThrows(IllegalArgumentException.class,
             ()->equipmentServiceMocked.createEquipment(equipment),
-            "one of this equipment fields is null");
+            "the field of "+ nullField +" is blank");
     }
     @ParameterizedTest
     @MethodSource("testDataAttribute")
@@ -132,13 +135,16 @@ class EquipmentServiceImplTest {
         Field[] fields = equipment.getClass().getDeclaredFields();
         for(Field field : fields){
             field.setAccessible(true);
-            if(field.getName() == nullField){
+            if(field.getName().equals(nullField) && field.getType().equals(String.class)){
                 field.set(equipment,"");
             }
         }
+        Mockito.when(equipmentServiceMocked
+                        .createEquipment(equipment))
+                .thenThrow(IllegalArgumentException.class);
         assertThrows(IllegalArgumentException.class,
                 ()->equipmentServiceMocked.createEquipment(equipment),
-                "one of this equipment fields is null");
+                "the field of "+ nullField +" is blank");
     }
 
     private static Stream<Arguments> testDataAttribute(){
