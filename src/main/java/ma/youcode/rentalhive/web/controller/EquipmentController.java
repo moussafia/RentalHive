@@ -18,11 +18,12 @@ public class EquipmentController {
     EquipmentMatriculesServiceImpl equipmentMatriculesService;
 
     @PutMapping("/equipment/{id}")
-    public ResponseEntity updateEquipment(@PathVariable("id") long id, @RequestBody EquipmentMatricule equipment) {
+    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentMatricule equipment) {
         Optional<EquipmentMatricule> equipment1 = equipmentMatriculesService.findById(id);
 
         if (equipment1.isPresent()) {
-            return new ResponseEntity<>(equipment1.get(), HttpStatus.OK);
+            EquipmentMatricule updatedEquipmentMatricule = equipmentMatriculesService.updateEquipmentMatricule(id, equipment);
+            return new ResponseEntity<>(updatedEquipmentMatricule.getEquipment(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

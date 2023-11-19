@@ -1,5 +1,4 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
-
 import ma.youcode.rentalhive.dao.EquipmentMatriculeDao;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.EquipmentMatricule;
@@ -12,8 +11,14 @@ import java.util.Optional;
 
 @Service
 public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesService {
-    @Autowired
+
     private EquipmentMatriculeDao equipmentMatriculeDao;
+    @Autowired
+    public EquipmentMatriculesServiceImpl(EquipmentMatriculeDao equipmentMatriculeDao) {
+        this.equipmentMatriculeDao = equipmentMatriculeDao;
+    }
+    public EquipmentMatriculesServiceImpl() {
+    }
     @Override
     public EquipmentMatricule saveEquipmentMatricule(Equipment equipment) {
         return null;
@@ -21,16 +26,20 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
 
     @Override
     public EquipmentMatricule updateEquipmentMatricule(Long id, EquipmentMatricule equipment) {
-        EquipmentMatricule updatedEquipment = equipmentMatriculeDao.findById(id).get();
-        updatedEquipment.setId(id);
-        updatedEquipment.getEquipment().setName(equipment.getEquipment().getName());
-        updatedEquipment.getEquipment().setQuantity(equipment.getEquipment().getQuantity());
-        updatedEquipment.getEquipment().setCategory(equipment.getEquipment().getCategory());
-        updatedEquipment.getEquipment().setEquipmentMatricule(equipment.getEquipment().getEquipmentMatricule());
-        updatedEquipment.getEquipment().setManufactorer(equipment.getEquipment().getManufactorer());
-        updatedEquipment.getEquipment().setPricePerDay(equipment.getEquipment().getPricePerDay());
+        Optional<EquipmentMatricule> updatedEquipmentOptional = equipmentMatriculeDao.findById(id);
+        if (updatedEquipmentOptional.isPresent() && equipment != null) {
+            EquipmentMatricule updatedEquipment = updatedEquipmentOptional.get();
+            updatedEquipment.setId(id);
+            updatedEquipment.getEquipment().setName(equipment.getEquipment().getName());
+            updatedEquipment.getEquipment().setQuantity(equipment.getEquipment().getQuantity());
+            updatedEquipment.getEquipment().setCategory(equipment.getEquipment().getCategory());
+            updatedEquipment.getEquipment().setEquipmentMatricule(equipment.getEquipment().getEquipmentMatricule());
+            updatedEquipment.getEquipment().setManufacturer(equipment.getEquipment().getManufacturer());
+            updatedEquipment.getEquipment().setPricePerDay(equipment.getEquipment().getPricePerDay());
 
-        return equipmentMatriculeDao.save(updatedEquipment);
+            return equipmentMatriculeDao.save(updatedEquipment);
+        }
+        return null;
     }
 
     @Override
@@ -52,7 +61,7 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
     public EquipmentMatricule historicForEquipment(EquipmentMatricule matricule) {
         return null;
     }
-    public Optional<EquipmentMatricule> findById(long id) {
+    public Optional<EquipmentMatricule> findById(Long id) {
         return equipmentMatriculeDao.findById(id);
     }
     @Override

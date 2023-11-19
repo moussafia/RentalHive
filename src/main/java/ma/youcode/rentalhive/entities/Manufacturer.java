@@ -12,11 +12,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Manufactorer {
+public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String manufactorer;
-    @OneToMany(mappedBy = "manufactorer")
+    private String manufacturer;
+    @OneToMany(mappedBy = "manufacturer")
     private Set<Equipment> equipment;
 }

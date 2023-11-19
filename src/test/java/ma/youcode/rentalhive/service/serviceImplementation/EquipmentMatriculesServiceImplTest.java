@@ -1,15 +1,14 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
 import ma.youcode.rentalhive.dao.CategoryDao;
-import ma.youcode.rentalhive.dao.EquipmentDao;
 import ma.youcode.rentalhive.dao.EquipmentMatriculeDao;
 import ma.youcode.rentalhive.dao.ManufactoreDao;
 import ma.youcode.rentalhive.entities.*;
 import ma.youcode.rentalhive.entities.enums.Status;
-import ma.youcode.rentalhive.service.EquipmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -20,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EquipmentMatriculesServiceImplTest {
-
     EquipmentMatriculeDao equipmentMatriculeDao;
     CategoryDao categoryDao;
     ManufactoreDao manufactoreDao;
@@ -53,8 +51,8 @@ class EquipmentMatriculesServiceImplTest {
         equipment.setQuantity(10);
         equipment.setPricePerDay(15.0F);
 
-        Manufactorer manufactorer = createManufactorer();
-        equipment.setManufactorer(manufactorer);
+        Manufacturer manufactorer = createManufactorer();
+        equipment.setManufacturer(manufactorer);
 
         Category category = createCategory();
         equipment.setCategory(category);
@@ -62,21 +60,21 @@ class EquipmentMatriculesServiceImplTest {
         return equipment;
     }
 
-    private static Manufactorer createManufactorer() {
-        Manufactorer manufactorer = new Manufactorer();
-        manufactorer.setManufactorer("Fake Manufacturer");
+    Manufacturer createManufactorer() {
+        Manufacturer manufactorer = new Manufacturer();
+        manufactorer.setManufacturer("Fake Manufacturer");
 
         return manufactorer;
     }
 
-    private static Category createCategory() {
+    Category createCategory() {
         Category category = new Category();
         category.setName("Fake Category");
 
         return category;
     }
 
-    private static Contract createFakeContract() {
+    Contract createFakeContract() {
         Contract contract = new Contract();
         contract.setStatus(Status.FULFILLED);
         contract.setPrice(100.0F);
@@ -111,7 +109,7 @@ class EquipmentMatriculesServiceImplTest {
 
         EquipmentMatricule result = equipmentMatriculeService.updateEquipmentMatricule(id, updatedEquipment);
 
-        assertEquals(null, result);
+        assertNull(result);
         verify(equipmentMatriculeDao, times(1)).findById(id);
         verify(equipmentMatriculeDao, times(0)).save(any(EquipmentMatricule.class));
     }

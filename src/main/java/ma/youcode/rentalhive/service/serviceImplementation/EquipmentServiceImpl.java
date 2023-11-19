@@ -1,15 +1,13 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
-import ma.youcode.rentalhive.dao.CategoryDao;
 import ma.youcode.rentalhive.dao.EquipmentDao;
-import ma.youcode.rentalhive.dao.EquipmentMatriculeDao;
-import ma.youcode.rentalhive.dao.ManufactoreDao;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.Manufactorer;
+import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +20,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
 
+    @Autowired
     public EquipmentServiceImpl(EquipmentDao equipmentDao,
                                 CategoryService categoryService,
                                 ManufactorerService manufactorerService) {
@@ -34,12 +33,14 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Equipment createEquipment(Equipment equipment, Long category_id, String manufactorer) {
+    public Equipment createEquipment(Equipment equipment) {
+
+
         return null;
     }
 
     @Override
-    public Equipment updateEquipment(Equipment equipment, Category category, Manufactorer manufactorer) {
+    public Equipment updateEquipment(Long id,Equipment equipment) {
         return null;
     }
 
@@ -64,7 +65,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Optional<Manufactorer> fetshOrCreateEquipmentManufactorer(String manufactorer) {
+    public Optional<Manufacturer> fetshOrCreateEquipmentManufactorer(String manufactorer) {
         return Optional.empty();
     }
 
