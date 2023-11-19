@@ -5,6 +5,8 @@ import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,4 +32,12 @@ public class EquipmentController {
         equipment.setManufacturer(manufacturer);
         return equipmentMatriculesService.saveEquipmentMatricule(equipment);
 }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRunTimeException(RuntimeException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+}
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }

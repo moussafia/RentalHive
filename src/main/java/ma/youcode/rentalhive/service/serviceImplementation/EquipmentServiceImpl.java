@@ -59,7 +59,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     public void checkEquipmentIfExist(String name) {
         Optional<Equipment> equipment = equipmentDao.findByName(name);
         if(equipment.isPresent()){
-            throw new RuntimeException("equipment already exist if just do update");
+            throw new RuntimeException("equipment already exist, just do update");
         }
     }
 
@@ -83,15 +83,15 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
     @Override
     public void validateEquipment(Equipment equipment) {
-        if(equipment.getName().isEmpty() || equipment.getName().isBlank() || equipment.getName() == null)
+        if(equipment.getName() == null || equipment.getName().isEmpty() || equipment.getName().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
-        if(equipment.getPricePerDay().toString().isEmpty() || equipment.getPricePerDay().toString().isBlank() || equipment.getPricePerDay() == null)
+        if( equipment.getPricePerDay() == null || equipment.getPricePerDay().toString().isEmpty() || equipment.getPricePerDay().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
-        if(equipment.getQuantity().toString().isEmpty() || equipment.getQuantity().toString().isBlank() || equipment.getQuantity() == null)
+        if(equipment.getQuantity() == null || equipment.getQuantity().toString().isEmpty() || equipment.getQuantity().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
-        if(equipment.getCategory().toString().isEmpty() || equipment.getCategory().toString().isBlank() || equipment.getCategory() == null)
+        if(equipment.getCategory() == null || equipment.getCategory().toString().isEmpty() || equipment.getCategory().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
-        if(equipment.getManufacturer().toString().isEmpty() || equipment.getManufacturer().toString().isBlank() || equipment.getManufacturer() == null)
+        if(equipment.getManufacturer() == null || equipment.getManufacturer().toString().isEmpty() || equipment.getManufacturer().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
     }
 }
