@@ -32,12 +32,8 @@ public class EquipmentController {
         equipment.setManufacturer(manufacturer);
         return equipmentMatriculesService.saveEquipmentMatricule(equipment);
 }
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRunTimeException(RuntimeException ex){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-}
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex){
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleExceptions(Exception ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
