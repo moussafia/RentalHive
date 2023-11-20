@@ -3,20 +3,37 @@ package ma.youcode.rentalhive.web.controller;
 import ma.youcode.rentalhive.dto.EquipmentDto;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
+import ma.youcode.rentalhive.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(value = "/Equipment", produces="application/json")
+@RequestMapping(value = "/api", produces="application/json")
 public class EquipmentController {
     private final EquipmentMatriculesService equipmentMatriculesService;
-
+    @Autowired
     public EquipmentController(EquipmentMatriculesService equipmentMatriculesService) {
         this.equipmentMatriculesService = equipmentMatriculesService;
     }
+    @PutMapping("/equipment/{id}")
+    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentMatricule equipment) {
+        Optional<EquipmentMatricule> equipment1 = equipmentMatriculesService.findBy(id);
+
+        if (equipment1.isPresent()) {
+            EquipmentMatricule updatedEquipmentMatricule = equipmentMatriculesService.updateEquipmentMatricule(id, equipment);
+            return new ResponseEntity<>(updatedEquipmentMatricule.getEquipment(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(value = "/saveEquipment",method = RequestMethod.POST ,consumes = "application/json")
     public Equipment saveEquipment(@RequestBody EquipmentDto equipmentDto){
         Equipment equipment = new Equipment();

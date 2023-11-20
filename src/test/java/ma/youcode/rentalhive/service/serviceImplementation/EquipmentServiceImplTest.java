@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
@@ -26,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 class EquipmentServiceImplTest {
-
     private EquipmentDao equipmentDao;
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
@@ -162,4 +162,84 @@ class EquipmentServiceImplTest {
         );
     }
 
+    /* Tests On Update Equipment* */
+
+    @Test
+    void testUpdateEquipmentForNonExistingEquipmentAndThrowException() {
+        long equipmentId = 1L;
+        Equipment updatedEquipment = createEquipment();
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExist(updatedEquipment.getName()))
+                .thenReturn(null);
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment),
+                "should throw exception for non-existing equipment");
+    }
+
+    @Test
+    void testUpdateEquipmentSuccess() {
+        long equipmentId = 1L;
+        Equipment existingEquipment = createEquipment();
+        Equipment updatedEquipment = createEquipment();
+        updatedEquipment.setName("Updated Equipment");
+
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExist(updatedEquipment.getName()))
+                .thenReturn(null);
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(existingEquipment));
+
+        Mockito.when(equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment))
+                .thenAnswer(invocationOnMock -> {
+                    Equipment equipmentSaved = updatedEquipment;
+                    equipmentSaved.setId(equipmentId);
+                    return equipmentSaved;
+                });
+
+        Equipment equipmentSaved = equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment);
+
+        assertEquals(equipmentId, equipmentSaved.getId());
+        assertEquals(updatedEquipment.getName(), equipmentSaved.getName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("testDataAttribute")
+    void testUpdateEquipmentAttributeForNull(Equipment equipment, String nullField) throws IllegalAccessException {
+        long equipmentId = 1L;
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(createEquipment()));
+
+        Field[] fields = equipment.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals(nullField)) {
+                field.set(equipment, null);
+            }
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentServiceMocked.updateEquipment(equipmentId, equipment),
+                "one of these fields is null");
+    }
+
+    @ParameterizedTest
+    @MethodSource("testDataAttribute")
+    void testUpdateEquipmentAttributeForBlank(Equipment equipment, String nullField) throws IllegalAccessException {
+        long equipmentId = 1L;
+        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(createEquipment()));
+
+        Field[] fields = equipment.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals(nullField)) {
+                field.set(equipment, "");
+            }
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentServiceMocked.updateEquipment(equipmentId, equipment),
+                "one of these fields is blank");
+    }
 }

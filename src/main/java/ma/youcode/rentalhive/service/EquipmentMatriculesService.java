@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface EquipmentMatriculesService {
     Equipment saveEquipmentMatricule(Equipment equipment);
-    EquipmentMatricule updateEquipmentMatricule(Equipment equipment);
+    EquipmentMatricule updateEquipmentMatricule(Long id, EquipmentMatricule equipment);
     void deleteEquipemntMatricule(EquipmentMatricule equipmentMatricule);
     List<EquipmentMatricule> ShowAllEquipmentMatricule();
     EquipmentMatricule searchEquipementMatricule(EquipmentMatricule equipmentMatricule);

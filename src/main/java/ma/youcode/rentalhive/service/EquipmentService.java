@@ -9,13 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface EquipmentService {
 
     Equipment createEquipment(Equipment equipment);
-    Equipment updateEquipment(Equipment equipment,
-                              Category category,
-                              Manufacturer manufactorer);
+    Equipment updateEquipment(Long id, Equipment equipment);
     List<Equipment> searchEquipmentDisponible(Equipment equipment,
                                               LocalDateTime dateTime);
     void checkEquipmentIfExist(String name);
@@ -25,4 +22,7 @@ public interface EquipmentService {
 
     void validateEquipment(Equipment equipment);
 
+    void validateEquipment();
+
+    Optional<Equipment> checkEquipmentIfExistById(long equipmentId);
 }

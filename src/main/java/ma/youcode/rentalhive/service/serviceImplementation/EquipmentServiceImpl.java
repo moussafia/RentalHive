@@ -64,12 +64,8 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Category checkCategoryIfExistForCreateEquipment(Long category_id) {
-        Optional<Category> category = categoryService.searchCategory(category_id);
-        if(category.isPresent()){
-            return category.get();
-        }
-       throw new RuntimeException("category does not exist");
+    public Optional<Category> checkCategoryIfExistForCreateEquipment(Long category_id) {
+        return Optional.empty();
     }
     @Override
     public Manufacturer fetshOrCreateEquipmentManufactorer(String manufacturer_name) {
@@ -94,4 +90,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         if(equipment.getManufacturer() == null || equipment.getManufacturer().toString().isEmpty() || equipment.getManufacturer().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
     }
+
+
 }
