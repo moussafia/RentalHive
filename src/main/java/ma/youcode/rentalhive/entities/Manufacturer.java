@@ -1,8 +1,10 @@
 package ma.youcode.rentalhive.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -18,5 +20,6 @@ public class Manufacturer {
     private Long id;
     private String manufacturer;
     @OneToMany(mappedBy = "manufacturer")
+    @JsonManagedReference
     private Set<Equipment> equipment;
 }

@@ -1,5 +1,6 @@
 package ma.youcode.rentalhive.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class Contract {
     @ManyToMany(mappedBy ="contracts")
     private Set<EquipmentMatricule> equipmentMatricules;
     @OneToOne
+    @JsonBackReference
     private Demande demande;
 }

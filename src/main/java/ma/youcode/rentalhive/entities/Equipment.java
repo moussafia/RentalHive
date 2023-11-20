@@ -1,16 +1,14 @@
 package ma.youcode.rentalhive.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-@Entity
+@Entity @ToString(exclude = {"manufacturer","category", "equipmentMatricule"}) @EqualsAndHashCode(exclude = {"manufacturer","category", "equipmentMatricule"})
 public class Equipment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,10 +16,13 @@ public class Equipment {
     private Integer quantity;
     private Float pricePerDay;
     @ManyToOne
+    @JsonBackReference
     private Manufacturer manufacturer;
     @OneToMany(mappedBy = "equipment")
+    @JsonManagedReference
     private Set<EquipmentMatricule> equipmentMatricule;
     @ManyToOne
+    @JsonBackReference
     private Category category;
 
 

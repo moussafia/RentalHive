@@ -1,9 +1,9 @@
 package ma.youcode.rentalhive.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -20,6 +20,7 @@ public class EquipmentMatricule {
     private Long id;
     private String matricule;
     @ManyToOne
+    @JsonBackReference
     private Equipment equipment;
     @ManyToMany
     @JoinTable(
@@ -27,6 +28,7 @@ public class EquipmentMatricule {
             joinColumns = @JoinColumn(name = "Equipmentmatricule_id"),
             inverseJoinColumns = @JoinColumn(name = "demande_id")
     )
+    @JsonManagedReference
     private Set<Contract> contracts;
 
 }

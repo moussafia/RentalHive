@@ -8,4 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface EquipmentDao extends JpaRepository<Equipment, Long> {
+    Optional<Equipment> findByName(String equipment_name);
 }

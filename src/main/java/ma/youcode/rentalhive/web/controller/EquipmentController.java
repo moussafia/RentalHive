@@ -1,8 +1,13 @@
 package ma.youcode.rentalhive.web.controller;
 
+import ma.youcode.rentalhive.dao.EquipmentDao;
+import ma.youcode.rentalhive.dto.EquipmentDto;
+import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.EquipmentMatricule;
+import ma.youcode.rentalhive.entities.Manufacturer;
+import ma.youcode.rentalhive.service.EquipmentMatriculesService;
 import ma.youcode.rentalhive.service.serviceImplementation.EquipmentMatriculesServiceImpl;
+import ma.youcode.rentalhive.service.serviceImplementation.EquipmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +19,24 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api", produces="application/json")
 public class EquipmentController {
-    @Autowired
+
+    EquipmentServiceImpl equipmentService;
+    EquipmentDao equipmentDao;
     EquipmentMatriculesServiceImpl equipmentMatriculesService;
+    @Autowired
+    public EquipmentController(EquipmentServiceImpl equipmentService, EquipmentDao equipmentDao, EquipmentMatriculesServiceImpl equipmentMatriculesService) {
+        this.equipmentService = equipmentService;
+        this.equipmentDao = equipmentDao;
+        this.equipmentMatriculesService = equipmentMatriculesService;
+    }
 
     @PutMapping("/equipment/{id}")
-    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentMatricule equipment) {
-        Optional<EquipmentMatricule> equipment1 = equipmentMatriculesService.findById(id);
+    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentDto equipmentDto) {
+        Optional<Equipment> equipment1 = equipmentDao.findById(id);
 
         if (equipment1.isPresent()) {
-            EquipmentMatricule updatedEquipmentMatricule = equipmentMatriculesService.updateEquipmentMatricule(id, equipment);
-            return new ResponseEntity<>(updatedEquipmentMatricule.getEquipment(), HttpStatus.OK);
+            Equipment updatedEquipment = equipmentService.updateEquipment(id, equipmentDto);
+            return new ResponseEntity<>(updatedEquipment, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
