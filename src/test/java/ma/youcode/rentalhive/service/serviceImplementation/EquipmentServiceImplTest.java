@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
@@ -22,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EquipmentServiceImplTest {
-
     private EquipmentDao equipmentDao;
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
@@ -165,4 +165,84 @@ class EquipmentServiceImplTest {
         );
     }
 
+    /* Tests On Update Equipment* */
+
+    @Test
+    void testUpdateEquipmentForNonExistingEquipmentAndThrowException() {
+        long equipmentId = 1L;
+        Equipment updatedEquipment = createEquipment();
+        Mockito.when(equipmentService.checkEquipmentIfExist(updatedEquipment.getName()))
+                .thenReturn(null);
+        Mockito.when(equipmentService.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentService.updateEquipment(equipmentId, updatedEquipment),
+                "should throw exception for non-existing equipment");
+    }
+
+    @Test
+    void testUpdateEquipmentSuccess() {
+        long equipmentId = 1L;
+        Equipment existingEquipment = createEquipment();
+        Equipment updatedEquipment = createEquipment();
+        updatedEquipment.setName("Updated Equipment");
+
+        Mockito.when(equipmentService.checkEquipmentIfExist(updatedEquipment.getName()))
+                .thenReturn(null);
+        Mockito.when(equipmentService.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(existingEquipment));
+
+        Mockito.when(equipmentService.updateEquipment(equipmentId, updatedEquipment))
+                .thenAnswer(invocationOnMock -> {
+                    Equipment equipmentSaved = updatedEquipment;
+                    equipmentSaved.setId(equipmentId);
+                    return equipmentSaved;
+                });
+
+        Equipment equipmentSaved = equipmentService.updateEquipment(equipmentId, updatedEquipment);
+
+        assertEquals(equipmentId, equipmentSaved.getId());
+        assertEquals(updatedEquipment.getName(), equipmentSaved.getName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("testDataAttribute")
+    void testUpdateEquipmentAttributeForNull(Equipment equipment, String nullField) throws IllegalAccessException {
+        long equipmentId = 1L;
+        Mockito.when(equipmentService.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(createEquipment()));
+
+        Field[] fields = equipment.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals(nullField)) {
+                field.set(equipment, null);
+            }
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentService.updateEquipment(equipmentId, equipment),
+                "one of these fields is null");
+    }
+
+    @ParameterizedTest
+    @MethodSource("testDataAttribute")
+    void testUpdateEquipmentAttributeForBlank(Equipment equipment, String nullField) throws IllegalAccessException {
+        long equipmentId = 1L;
+        Mockito.when(equipmentService.checkEquipmentIfExistById(equipmentId))
+                .thenReturn(Optional.of(createEquipment()));
+
+        Field[] fields = equipment.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals(nullField)) {
+                field.set(equipment, "");
+            }
+        }
+
+        assertThrows(IllegalArgumentException.class,
+                () -> equipmentService.updateEquipment(equipmentId, equipment),
+                "one of these fields is blank");
+    }
 }

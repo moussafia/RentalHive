@@ -11,9 +11,7 @@ import java.util.Optional;
 public interface EquipmentService {
 
     Equipment createEquipment(Equipment equipment);
-    Equipment updateEquipment(Equipment equipment,
-                              Category category,
-                              Manufacturer manufactorer);
+    Equipment updateEquipment(Long id, Equipment equipment);
     List<Equipment> searchEquipmentDisponible(Equipment equipment,
                                               LocalDateTime dateTime);
     Optional<Equipment> checkEquipmentIfExist(String name);
@@ -23,5 +21,5 @@ public interface EquipmentService {
     void validateEquipment();
     Optional<Manufacturer> fetshOrCreateEquipmentManufactorer(String manufactorer);
 
-
+    Optional<Equipment> checkEquipmentIfExistById(long equipmentId);
 }

@@ -7,6 +7,7 @@ import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     private CategoryService categoryService;
     private ManufactorerService manufactorerService;
 
+    @Autowired
     public EquipmentServiceImpl(EquipmentDao equipmentDao,
                                 CategoryService categoryService,
                                 ManufactorerService manufactorerService) {
@@ -38,7 +40,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Equipment updateEquipment(Equipment equipment, Category category, Manufacturer manufactorer) {
+    public Equipment updateEquipment(Long id,Equipment equipment) {
         return null;
     }
 
@@ -66,6 +68,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     public Optional<Manufacturer> fetshOrCreateEquipmentManufactorer(String manufactorer) {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Equipment> checkEquipmentIfExistById(long equipmentId) {
+        return Optional.empty();
+    };
 
 
 }

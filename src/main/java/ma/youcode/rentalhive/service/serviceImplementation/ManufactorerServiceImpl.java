@@ -3,6 +3,7 @@ package ma.youcode.rentalhive.service.serviceImplementation;
 import ma.youcode.rentalhive.dao.ManufactoreDao;
 import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.ManufactorerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
 @Service
 public class ManufactorerServiceImpl implements ManufactorerService {
     private ManufactoreDao manufactoreDao;
-
+    @Autowired
     public ManufactorerServiceImpl(ManufactoreDao manufactoreDao) {
         this.manufactoreDao = manufactoreDao;
     }
@@ -32,7 +33,7 @@ public class ManufactorerServiceImpl implements ManufactorerService {
         Manufacturer manufacturer = new Manufacturer();
         manufacturer.setManufacturer(manufacturer_name);
         validateManufacturerName(manufacturer);
-        return manufactoreDao.findByManufactorer(manufacturer_name);
+        return manufactoreDao.findByManufacturer(manufacturer_name);
     }
 
     @Override

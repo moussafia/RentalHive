@@ -7,12 +7,10 @@ import java.util.List;
 
 public interface EquipmentMatriculesService {
     EquipmentMatricule saveEquipmentMatricule(Equipment equipment);
-    EquipmentMatricule updateEquipmentMatricule(Equipment equipment);
+    EquipmentMatricule updateEquipmentMatricule(Long id, EquipmentMatricule equipment);
     void deleteEquipemntMatricule(EquipmentMatricule equipmentMatricule);
     List<EquipmentMatricule> ShowAllEquipmentMatricule();
     EquipmentMatricule searchEquipementMatricule(EquipmentMatricule equipmentMatricule);
     EquipmentMatricule historicForEquipment(EquipmentMatricule matricule);
     void validateEquipmentMatricule(EquipmentMatricule matricule);
-
-
 }
