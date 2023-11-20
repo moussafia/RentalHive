@@ -21,5 +21,5 @@ public interface EquipmentService {
     void validateEquipment();
     Optional<Manufacturer> fetshOrCreateEquipmentManufactorer(String manufactorer);
 
-
+    Optional<Equipment> checkEquipmentIfExistById(long equipmentId);
 }

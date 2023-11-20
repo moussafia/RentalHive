@@ -69,5 +69,10 @@ public class EquipmentServiceImpl implements EquipmentService {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Equipment> checkEquipmentIfExistById(long equipmentId) {
+        return Optional.empty();
+    };
+
 
 }
