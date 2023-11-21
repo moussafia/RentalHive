@@ -1,7 +1,7 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
-import liquibase.pro.packaged.M;
 import ma.youcode.rentalhive.dao.EquipmentDao;
+import ma.youcode.rentalhive.dto.EquipmentDto;
 import ma.youcode.rentalhive.entities.Category;
 import ma.youcode.rentalhive.entities.Equipment;
 import ma.youcode.rentalhive.entities.Manufacturer;
@@ -9,9 +9,9 @@ import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +51,35 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
+    public Equipment updateEquipment(Equipment equipment) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public Equipment updateEquipment(Long id, EquipmentDto equipmentDto) {
+        Equipment equipment = new Equipment();
+        equipment.setId(id);
+        equipment.setName(equipmentDto.getName());
+        equipment.setPricePerDay(equipmentDto.getPricePerDay());
+        equipment.setQuantity(equipmentDto.getQuantity());
+        equipment.setPricePerDay(equipmentDto.getPricePerDay());
+        Category category1 = new Category();
+        category1.setId(equipmentDto.getCategory_id());
+        equipment.setCategory(category1);
+        Manufacturer manufacturer1 = new Manufacturer();
+        manufacturer1.setManufacturer(equipmentDto.getManufacturerName());
+        equipment.setManufacturer(manufacturer1);
+
+        Category category = checkCategoryIfExistForCreateEquipment(equipment.getCategory().getId());
+        Manufacturer manufacturer = fetshOrCreateEquipmentManufactorer(equipment.getManufacturer().getManufacturer());
+        equipment.setCategory(category);
+        equipment.setManufacturer(manufacturer);
+        validateEquipment(equipment);
+        return equipmentDao.save(equipment);
+    }
+
+    @Override
     public List<Equipment> searchEquipmentDisponible(Equipment equipment, LocalDateTime dateTime) {
         return null;
     }
@@ -64,8 +93,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Optional<Category> checkCategoryIfExistForCreateEquipment(Long category_id) {
-        return Optional.empty();
+    public Category checkCategoryIfExistForCreateEquipment(Long category_id) {
+        Optional<Category> category = categoryService.searchCategory(category_id);
+        if(category.isPresent()){
+            return category.get();
+        }
+        throw new RuntimeException("category does not exist");
     }
     @Override
     public Manufacturer fetshOrCreateEquipmentManufactorer(String manufacturer_name) {
@@ -91,5 +124,8 @@ public class EquipmentServiceImpl implements EquipmentService {
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
     }
 
+    @Override
+    public void validateEquipment() {
 
+    }
 }
