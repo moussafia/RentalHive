@@ -4,7 +4,7 @@ import ma.youcode.rentalhive.dao.ManufactoreDao;
 import ma.youcode.rentalhive.entities.Manufacturer;
 import ma.youcode.rentalhive.service.ManufactorerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

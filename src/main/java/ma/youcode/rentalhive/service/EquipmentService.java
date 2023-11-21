@@ -31,4 +31,6 @@ public interface EquipmentService {
 
     void validateEquipment(Equipment equipment);
 
+    void validateEquipment();
+
 }

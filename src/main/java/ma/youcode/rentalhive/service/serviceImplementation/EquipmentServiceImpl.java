@@ -123,4 +123,9 @@ public class EquipmentServiceImpl implements EquipmentService {
         if(equipment.getManufacturer() == null || equipment.getManufacturer().toString().isEmpty() || equipment.getManufacturer().toString().isBlank())
             throw new IllegalArgumentException("name of equipment is null or blank or empty");
     }
+
+    @Override
+    public void validateEquipment() {
+
+    }
 }

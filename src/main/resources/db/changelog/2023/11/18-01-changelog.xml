@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1700321669766-5" author="Youcode (generated)">
+        <createTable tableName="manufacturer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_manufacturer"/>
+            </column>
+            <column name="manufacturer" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1700321669766-6" author="Youcode (generated)">
+        <addColumn tableName="equipment">
+            <column name="manufacturer_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1700321669766-7" author="Youcode (generated)">
+        <addForeignKeyConstraint baseColumnNames="equipment_id" baseTableName="equipmentmatricule"
+                                 constraintName="FK_EQUIPMENTMATRICULE_ON_EQUIPMENT" referencedColumnNames="id"
+                                 referencedTableName="equipment"/>
+    </changeSet>
+    <changeSet id="1700321669766-8" author="Youcode (generated)">
+        <addForeignKeyConstraint baseColumnNames="manufacturer_id" baseTableName="equipment"
+                                 constraintName="FK_EQUIPMENT_ON_MANUFACTURER" referencedColumnNames="id"
+                                 referencedTableName="manufacturer"/>
+    </changeSet>
+    <changeSet id="1700321669766-9" author="Youcode (generated)">
+        <addForeignKeyConstraint baseColumnNames="equipmentmatricule_id" baseTableName="demande_eqmatricules"
+                                 constraintName="fk_demeqm_on_equipment_matricule" referencedColumnNames="id"
+                                 referencedTableName="equipmentmatricule"/>
+    </changeSet>
+    <changeSet id="1700321669766-10" author="Youcode (generated)">
+        <dropForeignKeyConstraint baseTableName="equipment_matricule"
+                                  constraintName="FK_EQUIPMENTMATRICULE_ON_EQUIPMENT"/>
+    </changeSet>
+    <changeSet id="1700321669766-11" author="Youcode (generated)">
+        <dropForeignKeyConstraint baseTableName="equipment" constraintName="FK_EQUIPMENT_ON_MANUFACTORER"/>
+    </changeSet>
+    <changeSet id="1700321669766-12" author="Youcode (generated)">
+        <dropForeignKeyConstraint baseTableName="demande_eqmatricules"
+                                  constraintName="fk_demeqm_on_equipment_matricule"/>
+    </changeSet>
+    <changeSet id="1700321669766-13" author="Youcode (generated)">
+        <dropTable cascadeConstraints="true" tableName="equipment_matricule"/>
+    </changeSet>
+    <changeSet id="1700321669766-14" author="Youcode (generated)">
+        <dropTable cascadeConstraints="true" tableName="manufactorer"/>
+    </changeSet>
+    <changeSet id="1700321669766-15" author="Youcode (generated)">
+        <dropColumn columnName="manufactorer_id" tableName="equipment"/>
+    </changeSet>
+    <changeSet id="1700321669766-1" author="Youcode (generated)">
+        <dropColumn columnName="name" tableName="role"/>
+    </changeSet>
+    <changeSet id="1700321669766-2" author="Youcode (generated)">
+        <addColumn tableName="role">
+            <column name="name" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1700321669766-3" author="Youcode (generated)">
+        <dropColumn columnName="status" tableName="contract"/>
+    </changeSet>
+    <changeSet id="1700321669766-4" author="Youcode (generated)">
+        <addColumn tableName="contract">
+            <column name="status" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

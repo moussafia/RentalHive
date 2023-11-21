@@ -10,6 +10,14 @@
 .project
 .settings/
 
+<<<<<<< HEAD
+### VS Code ###
+.vscode/
+
+###pom.xml
+pom.xml
+src/main/resources/application.properties
+=======
 # Ignore logs
 log/
 
@@ -28,3 +36,4 @@ log/
 
 # Ignore the pom.xml file
 /pom.xml
+>>>>>>> main

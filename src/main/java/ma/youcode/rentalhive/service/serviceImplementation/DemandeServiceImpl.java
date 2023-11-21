@@ -2,6 +2,7 @@ package ma.youcode.rentalhive.service.serviceImplementation;
 
 import ma.youcode.rentalhive.entities.Demande;
 import ma.youcode.rentalhive.service.DemandeService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -18,6 +18,7 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private Float price;
     @ManyToMany(mappedBy ="contracts")
