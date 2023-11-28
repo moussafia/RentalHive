@@ -57,7 +57,7 @@ public class DossierReservationServiceImpl implements DossierReservationService 
         Integer quantityRequested = dossierReservation.getEquipmentMatricule().getEquipment().getQuantity();
         Pageable pageable = (Pageable) PageRequest.of(0, quantityRequested);
         Set<Long> equipmentMatriculeIds = dossierReservationDao.countQuantityAvailableForEquipment(equipmentId, userID,
-                startDate, endDate /*, pageable*/);
+                startDate, endDate , pageable);
         return equipmentMatriculeIds;
     }
 
