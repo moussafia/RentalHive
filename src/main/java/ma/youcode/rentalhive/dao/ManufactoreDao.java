@@ -1,6 +1,6 @@
 package ma.youcode.rentalhive.dao;
 
-import ma.youcode.rentalhive.entities.Manufacturer;
+import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

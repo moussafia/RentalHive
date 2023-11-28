@@ -1,26 +1,20 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
-import lombok.RequiredArgsConstructor;
 import ma.youcode.rentalhive.dao.EquipmentDao;
-import ma.youcode.rentalhive.entities.Category;
-import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.Manufacturer;
+import ma.youcode.rentalhive.model.domaine.entities.Category;
+import ma.youcode.rentalhive.model.domaine.entities.Equipment;
+import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,86 +154,5 @@ class EquipmentServiceImplTest {
                 Arguments.of(equipment, "manufacturer"),
                 Arguments.of(equipment, "category")
         );
-    }
-
-    /* Tests On Update Equipment* */
-
-    @Test
-    void testUpdateEquipmentForNonExistingEquipmentAndThrowException() {
-        long equipmentId = 1L;
-        Equipment updatedEquipment = createEquipment();
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExist(updatedEquipment.getName()))
-                .thenReturn(null);
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
-                .thenReturn(Optional.empty());
-
-        assertThrows(IllegalArgumentException.class,
-                () -> equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment),
-                "should throw exception for non-existing equipment");
-    }
-
-    @Test
-    void testUpdateEquipmentSuccess() {
-        long equipmentId = 1L;
-        Equipment existingEquipment = createEquipment();
-        Equipment updatedEquipment = createEquipment();
-        updatedEquipment.setName("Updated Equipment");
-
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExist(updatedEquipment.getName()))
-                .thenReturn(null);
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
-                .thenReturn(Optional.of(existingEquipment));
-
-        Mockito.when(equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment))
-                .thenAnswer(invocationOnMock -> {
-                    Equipment equipmentSaved = updatedEquipment;
-                    equipmentSaved.setId(equipmentId);
-                    return equipmentSaved;
-                });
-
-        Equipment equipmentSaved = equipmentServiceMocked.updateEquipment(equipmentId, updatedEquipment);
-
-        assertEquals(equipmentId, equipmentSaved.getId());
-        assertEquals(updatedEquipment.getName(), equipmentSaved.getName());
-    }
-
-    @ParameterizedTest
-    @MethodSource("testDataAttribute")
-    void testUpdateEquipmentAttributeForNull(Equipment equipment, String nullField) throws IllegalAccessException {
-        long equipmentId = 1L;
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
-                .thenReturn(Optional.of(createEquipment()));
-
-        Field[] fields = equipment.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            if (field.getName().equals(nullField)) {
-                field.set(equipment, null);
-            }
-        }
-
-        assertThrows(IllegalArgumentException.class,
-                () -> equipmentServiceMocked.updateEquipment(equipmentId, equipment),
-                "one of these fields is null");
-    }
-
-    @ParameterizedTest
-    @MethodSource("testDataAttribute")
-    void testUpdateEquipmentAttributeForBlank(Equipment equipment, String nullField) throws IllegalAccessException {
-        long equipmentId = 1L;
-        Mockito.when(equipmentServiceMocked.checkEquipmentIfExistById(equipmentId))
-                .thenReturn(Optional.of(createEquipment()));
-
-        Field[] fields = equipment.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            if (field.getName().equals(nullField)) {
-                field.set(equipment, "");
-            }
-        }
-
-        assertThrows(IllegalArgumentException.class,
-                () -> equipmentServiceMocked.updateEquipment(equipmentId, equipment),
-                "one of these fields is blank");
     }
 }

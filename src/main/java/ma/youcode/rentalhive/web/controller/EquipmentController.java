@@ -1,10 +1,10 @@
 package ma.youcode.rentalhive.web.controller;
 
 import ma.youcode.rentalhive.dao.EquipmentDao;
-import ma.youcode.rentalhive.dto.EquipmentDto;
-import ma.youcode.rentalhive.entities.Category;
-import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.Manufacturer;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.domaine.entities.Category;
+import ma.youcode.rentalhive.model.domaine.entities.Equipment;
+import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import ma.youcode.rentalhive.service.serviceImplementation.EquipmentMatriculesServiceImpl;
 import ma.youcode.rentalhive.service.serviceImplementation.EquipmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(value = "/api", produces="application/json")
+@RequestMapping(value = "/api/v1/equipment", produces="application/json")
 public class EquipmentController {
 
     EquipmentServiceImpl equipmentService;
@@ -29,7 +28,7 @@ public class EquipmentController {
         this.equipmentMatriculesService = equipmentMatriculesService;
     }
 
-    @PutMapping("/equipment/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentDto equipmentDto) {
         Optional<Equipment> equipment1 = equipmentDao.findById(id);
         if (equipment1.isPresent()) {
@@ -40,7 +39,7 @@ public class EquipmentController {
         }
     }
 
-    @RequestMapping(value = "/saveEquipment",method = RequestMethod.POST ,consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST ,consumes = "application/json")
     public Equipment saveEquipment(@RequestBody EquipmentDto equipmentDto){
         Equipment equipment = new Equipment();
         equipment.setName(equipmentDto.getName());
@@ -57,6 +56,6 @@ public class EquipmentController {
 }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleExceptions(Exception ex){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(ex.getMessage());
     }
 }

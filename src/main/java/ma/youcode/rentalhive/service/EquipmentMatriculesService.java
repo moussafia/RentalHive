@@ -1,13 +1,13 @@
 package ma.youcode.rentalhive.service;
 
-import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.EquipmentMatricule;
-import org.springframework.stereotype.Service;
+import ma.youcode.rentalhive.model.domaine.entities.Equipment;
+import ma.youcode.rentalhive.model.domaine.entities.EquipmentMatricule;
 
 import java.util.List;
 
 public interface EquipmentMatriculesService {
     Equipment saveEquipmentMatricule(Equipment equipment);
+    EquipmentMatricule findEqupmentMatriculeById(Long id);
     EquipmentMatricule updateEquipmentMatricule(Long id, EquipmentMatricule equipment);
 
     EquipmentMatricule updateEquipmentMatricule(Equipment equipment);

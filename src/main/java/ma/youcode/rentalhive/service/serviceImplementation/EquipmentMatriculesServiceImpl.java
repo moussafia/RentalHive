@@ -1,8 +1,8 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
 import ma.youcode.rentalhive.dao.EquipmentMatriculeDao;
-import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.EquipmentMatricule;
+import ma.youcode.rentalhive.model.domaine.entities.Equipment;
+import ma.youcode.rentalhive.model.domaine.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,8 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
     @Override
     public Equipment saveEquipmentMatricule(Equipment equipment) {
         Equipment equipmentSaved = equipmentService.createEquipment(equipment);
-        for (int i = 0; i < equipmentSaved.getQuantity(); i++) {
+        Integer quantityEquipment = equipmentSaved.getQuantity();
+        for (int i = 0; i < quantityEquipment; i++) {
             String matriculeUUID = UUID.randomUUID().toString();
             EquipmentMatricule matricule = new EquipmentMatricule();
             matricule.setMatricule(matriculeUUID);
@@ -35,6 +36,10 @@ public class EquipmentMatriculesServiceImpl implements EquipmentMatriculesServic
             equipmentMatriculeDao.save(matricule);
         }
         return equipmentSaved;
+    }
+    @Override
+    public EquipmentMatricule findEqupmentMatriculeById(Long id){
+        return equipmentMatriculeDao.findById(id).orElse(null);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
 import ma.youcode.rentalhive.dao.EquipmentDao;
-import ma.youcode.rentalhive.dto.EquipmentDto;
-import ma.youcode.rentalhive.entities.Category;
-import ma.youcode.rentalhive.entities.Equipment;
-import ma.youcode.rentalhive.entities.Manufacturer;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.domaine.entities.Category;
+import ma.youcode.rentalhive.model.domaine.entities.Equipment;
+import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import ma.youcode.rentalhive.service.CategoryService;
 import ma.youcode.rentalhive.service.EquipmentService;
 import ma.youcode.rentalhive.service.ManufactorerService;
@@ -44,17 +44,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         validateEquipment(equipment);
         return equipmentDao.save(equipment);
     }
-
-    @Override
-    public Equipment updateEquipment(Equipment equipment, Category category, Manufacturer manufactorer) {
-        return null;
-    }
-
-    @Override
-    public Equipment updateEquipment(Equipment equipment) {
-        return null;
-    }
-
     @Override
     @Transactional
     public Equipment updateEquipment(Long id, EquipmentDto equipmentDto) {

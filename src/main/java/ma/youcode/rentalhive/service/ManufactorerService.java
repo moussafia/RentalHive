@@ -1,7 +1,6 @@
 package ma.youcode.rentalhive.service;
 
-import ma.youcode.rentalhive.entities.Manufacturer;
-import org.springframework.stereotype.Service;
+import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 
 import java.util.Optional;
 
