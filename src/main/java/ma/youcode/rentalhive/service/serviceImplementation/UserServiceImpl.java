@@ -10,6 +10,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Override
     public User getUserById(Long id) {
         return userDao.findById(id).orElse(null);

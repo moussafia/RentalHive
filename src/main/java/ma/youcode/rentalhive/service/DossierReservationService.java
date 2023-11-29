@@ -7,6 +7,6 @@ import java.util.Set;
 
 public interface DossierReservationService {
     List<DossierReservation> createDossierReservation(DossierReservation dossierReservation);
-    List<DossierReservation> saveDossierReservation(Set<Long> matriculesIds, DossierReservation dossierReservation);
-    Set<Long> countQuantityAvailableForEquipment(DossierReservation dossierReservation);
+    List<DossierReservation> saveDossierReservation(Set<Integer> matriculesIds, DossierReservation dossierReservation);
+    Set<Integer> getEquipmentMatriculeAvailable(DossierReservation dossierReservation);
 }

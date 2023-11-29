@@ -16,7 +16,6 @@ public class Category {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference
     private Set<Equipment> equipment;
 
 }

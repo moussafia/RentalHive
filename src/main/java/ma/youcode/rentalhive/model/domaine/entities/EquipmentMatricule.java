@@ -2,10 +2,8 @@ package ma.youcode.rentalhive.model.domaine.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,15 +15,17 @@ import java.util.Set;
 @Entity
 @Builder
 @Table(name = "equipmentmatricule")
+@ToString(exclude = "dossierReservations")
 public class EquipmentMatricule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String matricule;
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Equipment equipment;
     @OneToMany(mappedBy = "equipmentMatricule")
-    Set<DossierReservation> dossierReservations;
+    private Set<DossierReservation> dossierReservations;
 
 }

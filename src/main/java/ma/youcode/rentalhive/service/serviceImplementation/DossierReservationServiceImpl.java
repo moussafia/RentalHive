@@ -30,7 +30,7 @@ public class DossierReservationServiceImpl implements DossierReservationService 
 
     @Override
     public List<DossierReservation> createDossierReservation(DossierReservation dossierReservation) {
-        Set<Long> equipmentMatriculeIds = this.countQuantityAvailableForEquipment(dossierReservation);
+        Set<Integer> equipmentMatriculeIds = this.getEquipmentMatriculeAvailable(dossierReservation);
         Integer quantityAvailable = equipmentMatriculeIds.size();
         if(quantityAvailable > 0)
             return this.saveDossierReservation(equipmentMatriculeIds, dossierReservation);
@@ -38,26 +38,29 @@ public class DossierReservationServiceImpl implements DossierReservationService 
     }
 
     @Override
-    public List<DossierReservation> saveDossierReservation(Set<Long> matriculesDisponibleId, DossierReservation dossierReservation) {
+    public List<DossierReservation> saveDossierReservation(Set<Integer> matriculesDisponibleId, DossierReservation dossierReservation) {
         List<DossierReservation> dossierReservationList = new ArrayList<>();
         matriculesDisponibleId.forEach(mId ->{
-            EquipmentMatricule equipmentMatricule = equipmentMatriculesService.findEqupmentMatriculeById(mId);
-            dossierReservation.setEquipmentMatricule(equipmentMatricule);
-            DossierReservation dossierReservationSaved = dossierReservationDao.save(dossierReservation);
+            EquipmentMatricule equipmentMatricule = equipmentMatriculesService.findEqupmentMatriculeById(Long.valueOf(mId));
+            DossierReservation dossierReservationForSaving = new DossierReservation();
+            dossierReservationForSaving.setReservation(dossierReservation.getReservation());
+            dossierReservationForSaving.setStartDate(dossierReservation.getStartDate());
+            dossierReservationForSaving.setEndDate(dossierReservation.getEndDate());
+            dossierReservationForSaving.setEquipmentMatricule(equipmentMatricule);
+            DossierReservation dossierReservationSaved = dossierReservationDao.save(dossierReservationForSaving);
             dossierReservationList.add(dossierReservationSaved);
         });
         return dossierReservationList;
     }
     @Override
-    public Set<Long> countQuantityAvailableForEquipment(DossierReservation dossierReservation){
+    public Set<Integer> getEquipmentMatriculeAvailable(DossierReservation dossierReservation){
         Long equipmentId = dossierReservation.getEquipmentMatricule().getEquipment().getId();
         Long userID = dossierReservation.getReservation().getUser().getId();
         LocalDateTime startDate = dossierReservation.getStartDate();
         LocalDateTime endDate = dossierReservation.getEndDate();
         Integer quantityRequested = dossierReservation.getEquipmentMatricule().getEquipment().getQuantity();
-        Pageable pageable = (Pageable) PageRequest.of(0, quantityRequested);
-        Set<Long> equipmentMatriculeIds = dossierReservationDao.countQuantityAvailableForEquipment(equipmentId, userID,
-                startDate, endDate , pageable);
+        Set<Integer> equipmentMatriculeIds = dossierReservationDao.fetshEquipmentAvailable(equipmentId, userID,
+                startDate, endDate,  quantityRequested);
         return equipmentMatriculeIds;
     }
 

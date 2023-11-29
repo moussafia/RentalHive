@@ -1,5 +1,6 @@
 package ma.youcode.rentalhive.model.domaine.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class PictureEquipment {
     private Long id;
     private String picture;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contract contract;
 
 }

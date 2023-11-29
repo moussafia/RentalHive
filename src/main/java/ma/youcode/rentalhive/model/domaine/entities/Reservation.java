@@ -1,8 +1,7 @@
 package ma.youcode.rentalhive.model.domaine.entities;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import ma.youcode.rentalhive.model.domaine.enums.Status;
 
 import javax.persistence.*;
@@ -10,19 +9,20 @@ import java.util.Set;
 
 @Entity @Data @AllArgsConstructor @NoArgsConstructor
 @Builder
+@ToString(exclude = "dossierReservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String Location;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
     private Float price;
+    private String currency;
     @Enumerated(EnumType.STRING)
     private Status statusClient;
-    @OneToMany(mappedBy = "reservation")
-    private Set<DossierReservation> dossierReservations;
     @OneToOne(mappedBy = "reservation")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contract contractClient;
-
 }

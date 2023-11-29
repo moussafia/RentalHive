@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Builder
-@Entity @ToString(exclude = {"manufacturer","category", "equipmentMatricule"}) @EqualsAndHashCode(exclude = {"manufacturer","category", "equipmentMatricule"})
+@Entity @ToString(exclude = "equipmentMatricule")
 public class Equipment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

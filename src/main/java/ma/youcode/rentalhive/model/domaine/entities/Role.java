@@ -1,9 +1,8 @@
 package ma.youcode.rentalhive.model.domaine.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = "user")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

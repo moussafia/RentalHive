@@ -13,34 +13,34 @@ import java.util.Set;
 @Repository
 public interface DossierReservationDao extends JpaRepository<DossierReservation, Long> {
 
-    @Query("SELECT (em.id) FROM EquipmentMatricule em " +
-            "where  em.equipment.id = :equipmentId " +
-            "AND em.id NOT IN " +
-            "( " +
-            "SELECT (dr.equipmentMatricule.id) " +
-            "FROM DossierReservation as dr " +
-            " " +
-            "JOIN Reservation as r " +
-            "on r.id = dr.reservation.id " +
-            "JOIN Contract as c " +
-            "on dr.reservation.id = c.reservation.id " +
-            "WHERE dr.equipmentMatricule.id = em.id " +
-            "AND (c.statusAdmin =  'FULFILLED' or (c.statusAdmin = 'PENDING' AND r.user.id = :userID)) " +
-            "AND (r.statusClient =  'FULFILLED' or (r.statusClient= 'PENDING' AND r.user.id = :userID)) " +
-            "AND ( " +
-            "CASE " +
-            "WHEN dr.startDate >  :startdate " +
-            "AND dr.endDate >  :enddate AND dr.startDate <  :enddate THEN 1 " +
-            "WHEN dr.startDate <  :startdate " +
-            "AND dr.endDate >  :enddate THEN 1 " +
-            "WHEN dr.endDate >  :startdate " +
-            "AND dr.endDate <  :enddate THEN 1 " +
-            "END " +
-            ") " +
-            ")")
-    Set<Long> countQuantityAvailableForEquipment(@Param("equipmentId") Long equipmentId,
+    @Query(value ="SELECT (em.id) FROM equipmentmatricule em  " +
+            "where  em.equipment_id = :equipmentId  " +
+            "AND em.id NOT IN  " +
+            "(  " +
+            "SELECT (dr.equipment_matricule_id)  " +
+            "FROM dossier_reservation as dr  " +
+            "  " +
+            "JOIN reservation as r  " +
+            "on r.id = dr.reservation_id  " +
+            "JOIN contract as c  " +
+            "on dr.reservation_id = c.reservation_id  " +
+            "WHERE dr.equipment_matricule_id = em.id  " +
+            "AND (c.status_admin = 'FULFILLED' or (c.status_admin ='PENDING' AND r.user_id = :userID))  " +
+            "AND (r.status_client = 'FULFILLED' or (r.status_client='PENDING' AND r.user_id = :userID))  " +
+            "AND (  " +
+            "CASE  " +
+            "WHEN dr.start_date > :startdate  " +
+            "AND dr.end_date > :enddate AND dr.start_date < :enddate THEN 1  " +
+            "WHEN dr.start_date < :startdate  " +
+            "AND dr.end_date > :enddate THEN 1  " +
+            "WHEN dr.end_date > :startdate  " +
+            "AND dr.end_date < :enddate THEN 1  " +
+            "END  " +
+            ")  " +
+            ") LIMIT :quantityRequested" ,nativeQuery = true)
+    Set<Integer> fetshEquipmentAvailable(@Param("equipmentId") Long equipmentId,
                                                         @Param("userID") Long userID,
                                                         @Param("startdate") LocalDateTime startdate,
                                                         @Param("enddate") LocalDateTime enddate,
-                                                        Pageable pageable);
+                                                        @Param("quantityRequested") Integer quantityRequested);
 }
