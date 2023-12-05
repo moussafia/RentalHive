@@ -13,11 +13,11 @@ public class DossierRequestDtoMapper {
            Set<DossierReservation> dossierReservationSet = new HashSet<>();
            dossierRequestDto.getEquipmentForReservation().forEach(dossier -> {
                 DossierReservation dossierReservation= new DossierReservation().builder()
+
                         .startDate(dossier.getStartDate())
                         .endDate(dossier.getEndDate())
                         .equipmentMatricule(new EquipmentMatricule().builder()
-                                .equipment(new Equipment().builder()
-                                        .id(dossier.getEquipment_id()).quantity(dossier.getQuantity()).build()).build())
+                                .equipment(new Equipment().builder().id(dossier.getEquipment_id()).quantity(dossier.getQuantity()).build()).build())
                         .build();
                dossierReservationSet.add(dossierReservation);
            });

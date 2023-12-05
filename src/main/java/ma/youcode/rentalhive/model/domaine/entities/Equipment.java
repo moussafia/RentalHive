@@ -14,9 +14,9 @@ import lombok.ToString;
 import javax.validation.constraints.*;
 import java.util.Set;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Builder
-@Entity @ToString(exclude = "equipmentMatricule")
+@Entity
 public class Equipment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,16 +27,17 @@ public class Equipment {
     @PositiveOrZero
     private Float pricePerDay;
     private String currency;
+    private String image;
     @ManyToOne
-    @JsonBackReference
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Manufacturer manufacturer;
     @OneToMany(mappedBy = "equipment")
-    @JsonManagedReference
+    //@JsonBackReference
     private Set<EquipmentMatricule> equipmentMatricule;
     @ManyToOne
-    @JsonBackReference
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonBackReference
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Category category;
+
 
 }

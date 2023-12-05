@@ -7,22 +7,20 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 @Entity
 @Builder
-@ToString(exclude = "Reservation")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String user_name;
-    @Column(unique = true)
     private String Email;
     private String password;
     @ManyToOne
-    @JsonIgnoreProperties("user")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Role role;
     @OneToMany(mappedBy = "user")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Reservation> reservation;
 }

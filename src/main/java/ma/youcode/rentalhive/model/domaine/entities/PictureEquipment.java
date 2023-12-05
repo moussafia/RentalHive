@@ -1,14 +1,11 @@
 package ma.youcode.rentalhive.model.domaine.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Data @AllArgsConstructor @NoArgsConstructor
+@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Builder
 public class PictureEquipment {
     @Id

@@ -9,13 +9,12 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
 @Table(name = "equipmentmatricule")
-@ToString(exclude = "dossierReservations")
 public class EquipmentMatricule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,12 +7,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@ToString(exclude = "user")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

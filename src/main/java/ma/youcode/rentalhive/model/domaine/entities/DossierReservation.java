@@ -5,9 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-@Entity @Data  @NoArgsConstructor @AllArgsConstructor
+@Entity @Getter @Setter  @NoArgsConstructor @AllArgsConstructor
 @Builder
-
+@ToString(exclude = {"equipmentMatricule","reservation"})
 public class DossierReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,10 @@ public class DossierReservation {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Float price;
+    @Transient
+    private Integer quantityRequested;
+    @Transient
+    private Integer quantityAvailable;
+    @Transient
+    private  Float priceTotalForEquipment;
 }

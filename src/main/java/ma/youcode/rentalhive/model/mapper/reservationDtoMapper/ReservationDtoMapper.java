@@ -7,7 +7,7 @@ import ma.youcode.rentalhive.model.dto.userDto.UserDto;
 import ma.youcode.rentalhive.model.mapper.userMapper.UserDtoMapper;
 
 public class ReservationDtoMapper {
-    public static void toReservation(ReservationDto reservationDto){
+    public static void toReservation(ReservationDto reservationDto) {
 //        Reservation reservation = new Reservation().builder()
 //                .status(reservationDto.status()).Location(reservationDto.location())
 //                .build();
@@ -22,5 +22,17 @@ public class ReservationDtoMapper {
 //                .status(reservation.getStatus())
 //                .build();
 //        return reservationDto;
+    }
+
+    public static ReservationDto toReservationDto(Reservation reservation) {
+        ReservationDto reservationDto = new ReservationDto(
+                reservation.getId(),
+                reservation.getLocation(),
+                UserDtoMapper.toUserDto(reservation.getUser()),
+                reservation.getPrice(),
+                reservation.getStatusClient(),
+                reservation.getCurrency()
+                );
+        return reservationDto;
     }
 }

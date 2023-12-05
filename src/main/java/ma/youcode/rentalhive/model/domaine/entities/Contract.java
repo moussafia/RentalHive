@@ -8,9 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
-@ToString(exclude = "pictureEquipments")
 public class Contract {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

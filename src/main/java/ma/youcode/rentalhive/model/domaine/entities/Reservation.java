@@ -7,9 +7,8 @@ import ma.youcode.rentalhive.model.domaine.enums.Status;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity @Data @AllArgsConstructor @NoArgsConstructor
+@Entity @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Builder
-@ToString(exclude = "dossierReservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

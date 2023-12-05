@@ -27,8 +27,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation CreateReservation(Reservation reservation) {
+    public Reservation createReservation(Reservation reservation) {
         reservation.setStatusClient(Status.PENDING);
+        reservation.setCurrency("MAD");
         User user = userService.getUserById(Math.random() > 0.5 ? 2L : 3L);
         if(user!=null) reservation.setUser(user);
         return reservationDao.save(reservation);

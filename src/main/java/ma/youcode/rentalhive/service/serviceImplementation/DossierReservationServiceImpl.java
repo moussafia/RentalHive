@@ -6,10 +6,7 @@ import ma.youcode.rentalhive.model.domaine.entities.EquipmentMatricule;
 import ma.youcode.rentalhive.service.DossierReservationService;
 import ma.youcode.rentalhive.service.EquipmentMatriculesService;
 import ma.youcode.rentalhive.service.ReservationService;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +15,10 @@ import java.util.Set;
 @Service
 public class DossierReservationServiceImpl implements DossierReservationService {
     private DossierReservationDao dossierReservationDao;
-    private ReservationService reservationService;
     private EquipmentMatriculesService equipmentMatriculesService;
     public DossierReservationServiceImpl(DossierReservationDao dossierReservationDao,
-             ReservationService reservationService,
              EquipmentMatriculesService equipmentMatriculesService) {
         this.dossierReservationDao = dossierReservationDao;
-        this.reservationService = reservationService;
         this.equipmentMatriculesService = equipmentMatriculesService;
     }
 
@@ -38,21 +32,6 @@ public class DossierReservationServiceImpl implements DossierReservationService 
     }
 
     @Override
-    public List<DossierReservation> saveDossierReservation(Set<Integer> matriculesDisponibleId, DossierReservation dossierReservation) {
-        List<DossierReservation> dossierReservationList = new ArrayList<>();
-        matriculesDisponibleId.forEach(mId ->{
-            EquipmentMatricule equipmentMatricule = equipmentMatriculesService.findEqupmentMatriculeById(Long.valueOf(mId));
-            DossierReservation dossierReservationForSaving = new DossierReservation();
-            dossierReservationForSaving.setReservation(dossierReservation.getReservation());
-            dossierReservationForSaving.setStartDate(dossierReservation.getStartDate());
-            dossierReservationForSaving.setEndDate(dossierReservation.getEndDate());
-            dossierReservationForSaving.setEquipmentMatricule(equipmentMatricule);
-            DossierReservation dossierReservationSaved = dossierReservationDao.save(dossierReservationForSaving);
-            dossierReservationList.add(dossierReservationSaved);
-        });
-        return dossierReservationList;
-    }
-    @Override
     public Set<Integer> getEquipmentMatriculeAvailable(DossierReservation dossierReservation){
         Long equipmentId = dossierReservation.getEquipmentMatricule().getEquipment().getId();
         Long userID = dossierReservation.getReservation().getUser().getId();
@@ -63,6 +42,31 @@ public class DossierReservationServiceImpl implements DossierReservationService 
                 startDate, endDate,  quantityRequested);
         return equipmentMatriculeIds;
     }
+    @Override
+    public List<DossierReservation> saveDossierReservation(Set<Integer> matriculesDisponibleId, DossierReservation dossierReservation) {
+        List<DossierReservation> dossierReservationList = new ArrayList<>();
+        Integer quantityAvailable = matriculesDisponibleId.size();
+        Integer quantityRequested = dossierReservation.getEquipmentMatricule().getEquipment().getQuantity();
+        matriculesDisponibleId.forEach(mId ->{
+            EquipmentMatricule equipmentMatricule = equipmentMatriculesService.findEqupmentMatriculeById(Long.valueOf(mId));
+            DossierReservation dossierReservationForSaving = new DossierReservation().builder()
+                    .reservation(dossierReservation.getReservation())
+                    .startDate(dossierReservation.getStartDate())
+                    .endDate(dossierReservation.getEndDate())
+                    .equipmentMatricule(equipmentMatricule)
+                    .build();
+            DossierReservation dossierReservationSaved = dossierReservationDao.save(dossierReservationForSaving);
+            Float PriceTotalForEquipment = calculPriceForReservation(dossierReservationSaved, quantityAvailable);
+            dossierReservationSaved.setQuantityAvailable(quantityAvailable);
+            dossierReservationSaved.setQuantityRequested(quantityRequested);
+            dossierReservationSaved.setPriceTotalForEquipment(PriceTotalForEquipment);
+            dossierReservationList.add(dossierReservationSaved);
+        });
+        return dossierReservationList;
+    }
 
-
+    public Float calculPriceForReservation(DossierReservation dossierReservation,Integer quantityAvailable){
+        Float priceEquipmentPerDay= dossierReservation.getEquipmentMatricule().getEquipment().getPricePerDay();
+        return priceEquipmentPerDay*quantityAvailable;
+    }
 }

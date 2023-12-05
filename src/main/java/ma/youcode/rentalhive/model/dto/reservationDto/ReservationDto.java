@@ -12,7 +12,7 @@ public record ReservationDto(
         String location,
         UserDto user,
         Float price_calculate,
-        String currency,
-        Status status
-) implements Serializable {
+        Status status,
+        String currency) implements Serializable {
+
 }
