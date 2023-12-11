@@ -4,13 +4,14 @@ import ma.youcode.rentalhive.model.domaine.entities.Category;
 import ma.youcode.rentalhive.model.domaine.entities.Equipment;
 import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import ma.youcode.rentalhive.model.dto.categoryDto.CategoryDto;
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentPostDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.mapper.categoryDtoMapper.CategoryDtoMapper;
 
 public class EquipmentDtoMapper {
-    public static EquipmentDto toEquipmentDto(Equipment equipment){
+    public static EquipmentResponseDto toEquipmentDto(Equipment equipment){
         CategoryDto categoryDto = CategoryDtoMapper.toCategoryDto(equipment.getCategory());
-        EquipmentDto equipmentDto = new EquipmentDto(
+        EquipmentResponseDto equipmentResponseDto = new EquipmentResponseDto(
                 equipment.getId(),
                 equipment.getName(),
                 equipment.getQuantity(),
@@ -18,18 +19,17 @@ public class EquipmentDtoMapper {
                 equipment.getManufacturer().getManufacturer(),
                 categoryDto
         );
-        return equipmentDto;
+        return equipmentResponseDto;
     }
-    public static Equipment toEquipment(EquipmentDto equipmentDto){
-        Category category = CategoryDtoMapper.toCategory(equipmentDto.category());
-        Manufacturer manufacturer = Manufacturer.builder().manufacturer(equipmentDto.manufacturerName()).build();
+    public static Equipment toEquipment(EquipmentPostDto equipmentPostDto){
+        Manufacturer manufacturer = Manufacturer.builder().manufacturer(equipmentPostDto.manufacturerName()).build();
         Equipment equipment = new Equipment().builder()
-                .id(equipmentDto.id())
-                .quantity(equipmentDto.quantity())
-                .name(equipmentDto.name())
-                .category(category)
+                .id(equipmentPostDto.id())
+                .quantity(equipmentPostDto.quantity())
+                .name(equipmentPostDto.name())
+                .category(new Category().builder().id(equipmentPostDto.categoryId()).build())
                 .manufacturer(manufacturer)
-                .pricePerDay(equipmentDto.pricePerDay())
+                .pricePerDay(equipmentPostDto.pricePerDay())
                 .build();
         return equipment;
     }

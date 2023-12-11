@@ -2,10 +2,9 @@ package ma.youcode.rentalhive.web.controller;
 
 import ma.youcode.rentalhive.dao.EquipmentDao;
 import ma.youcode.rentalhive.model.dto.categoryDto.CategoryDto;
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
-import ma.youcode.rentalhive.model.domaine.entities.Category;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentPostDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.domaine.entities.Equipment;
-import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
 import ma.youcode.rentalhive.model.mapper.equipmentDtoMapper.EquipmentDtoMapper;
 import ma.youcode.rentalhive.service.serviceImplementation.EquipmentMatriculesServiceImpl;
 import ma.youcode.rentalhive.service.serviceImplementation.EquipmentServiceImpl;
@@ -35,10 +34,10 @@ public class EquipmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentDto equipmentDto) {
+    public ResponseEntity updateEquipment(@PathVariable("id") Long id, @RequestBody EquipmentResponseDto equipmentResponseDto) {
         Optional<Equipment> equipment1 = equipmentDao.findById(id);
         if (equipment1.isPresent()) {
-            Equipment updatedEquipment = equipmentService.updateEquipment(id, equipmentDto);
+            Equipment updatedEquipment = equipmentService.updateEquipment(id, equipmentResponseDto);
             return new ResponseEntity<>(updatedEquipment, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -46,28 +45,27 @@ public class EquipmentController {
     }
 
     @RequestMapping(method = RequestMethod.POST ,consumes = "application/json")
-    public Equipment saveEquipment(@RequestBody EquipmentDto equipmentDto){
-        Equipment equipment = EquipmentDtoMapper.toEquipment(equipmentDto);
-        return equipmentMatriculesService.saveEquipmentMatricule(equipment);
+    public ResponseEntity<Equipment> saveEquipment(@RequestBody EquipmentPostDto equipmentPostDto){
+        Equipment equipment = EquipmentDtoMapper.toEquipment(equipmentPostDto);
+        return ResponseEntity.ok(equipmentMatriculesService.saveEquipmentMatricule(equipment));
 }
     @GetMapping
-    public List<EquipmentDto> getAllEquipment(@RequestParam(defaultValue = "0") Integer page){
-        PageRequest pageRequest = PageRequest.of(page, 10);
+    public ResponseEntity<List<EquipmentResponseDto>> getAllEquipment(@RequestParam(defaultValue = "0") Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 9);
         Page<Equipment> equipment = equipmentService.fetchAllEquipment(pageRequest);
-        List<EquipmentDto> equipmentDtoList = new ArrayList<>();
+        List<EquipmentResponseDto> equipmentResponseDtoList = new ArrayList<>();
         equipment.forEach( e -> {
             CategoryDto categoryDto = new CategoryDto(e.getCategory().getId(),e.getCategory().getName());
-            EquipmentDto equipmentDto = new EquipmentDto(e.getId(),
+            EquipmentResponseDto equipmentResponseDto = new EquipmentResponseDto(e.getId(),
                                     e.getName(),
                                     e.getQuantity(), e.getPricePerDay(),
                                     e.getManufacturer().getManufacturer(),
                                     categoryDto);
-            equipmentDtoList.add(equipmentDto);
+            equipmentResponseDtoList.add(equipmentResponseDto);
         });
-        return equipmentDtoList;
-    }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleExceptions(Exception ex){
-        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(ex.getMessage());
+        return ResponseEntity.ok()
+                .header("X-Total-Page",String.valueOf(equipment.getTotalPages()))
+                .header("X-Total-Element",String.valueOf(equipment.getTotalElements()))
+                .body(equipmentResponseDtoList);
     }
 }

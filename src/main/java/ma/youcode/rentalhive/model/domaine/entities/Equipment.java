@@ -27,7 +27,6 @@ public class Equipment {
     @PositiveOrZero
     private Float pricePerDay;
     private String currency;
-    private String image;
     @ManyToOne
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Manufacturer manufacturer;

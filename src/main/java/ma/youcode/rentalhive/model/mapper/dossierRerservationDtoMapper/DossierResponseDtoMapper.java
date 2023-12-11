@@ -3,7 +3,7 @@ package ma.youcode.rentalhive.model.mapper.dossierRerservationDtoMapper;
 import ma.youcode.rentalhive.model.domaine.entities.DossierReservation;
 import ma.youcode.rentalhive.model.dto.dosssierReservationDto.response.DossierResponseDto;
 import ma.youcode.rentalhive.model.dto.dosssierReservationDto.response.EquipmentReservationResponseDto;
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.dto.equipmentMatriculeDto.EquipmentMatriculeDto;
 import ma.youcode.rentalhive.model.dto.reservationDto.ReservationDto;
 import ma.youcode.rentalhive.model.mapper.equipmentDtoMapper.EquipmentDtoMapper;
@@ -26,14 +26,14 @@ public class DossierResponseDtoMapper {
                 EquipmentMatriculeDto equipmentMatricule = new EquipmentMatriculeDto(drEqp.getEquipmentMatricule().getMatricule());
                 equipmentMatricules.add(equipmentMatricule);
             });
-            EquipmentDto equipmentDto = EquipmentDtoMapper.toEquipmentDto(dr.get(0).getEquipmentMatricule().getEquipment());
+            EquipmentResponseDto equipmentResponseDto = EquipmentDtoMapper.toEquipmentDto(dr.get(0).getEquipmentMatricule().getEquipment());
             EquipmentReservationResponseDto equipmentReservationResponseDto
                     =new EquipmentReservationResponseDto(
                     dr.get(0).getStartDate(),
                     dr.get(0).getEndDate(),
                     dr.get(0).getQuantityRequested(),
                     dr.get(0).getQuantityAvailable(),
-                    equipmentDto,
+                    equipmentResponseDto,
                     dr.get(0).getPriceTotalForEquipment(),
                     equipmentMatricules
                     );

@@ -1,8 +1,5 @@
 package ma.youcode.rentalhive.model.dto.dosssierReservationDto.response;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.dto.equipmentMatriculeDto.EquipmentMatriculeDto;
 
 import java.io.Serializable;
@@ -15,7 +12,7 @@ public record EquipmentReservationResponseDto(
         LocalDateTime endDate,
         Integer quantity,
         Integer quantityAvailable,
-        EquipmentDto equipment,
+        EquipmentResponseDto equipment,
         Float priceTotal,
         Set<EquipmentMatriculeDto> equipmentMatricules
         

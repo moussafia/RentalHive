@@ -1,6 +1,6 @@
 package ma.youcode.rentalhive.service;
 
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.domaine.entities.Category;
 import ma.youcode.rentalhive.model.domaine.entities.Equipment;
 import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface EquipmentService {
 
     Equipment createEquipment(Equipment equipment);
-    Equipment updateEquipment(Long id, EquipmentDto equipmentDto);
+    Equipment updateEquipment(Long id, EquipmentResponseDto equipmentResponseDto);
     Page<Equipment> fetchAllEquipment(Pageable pageable);
 
     List<Equipment> searchEquipmentDisponible(Equipment equipment,

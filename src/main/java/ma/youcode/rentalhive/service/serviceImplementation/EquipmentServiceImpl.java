@@ -1,7 +1,7 @@
 package ma.youcode.rentalhive.service.serviceImplementation;
 
 import ma.youcode.rentalhive.dao.EquipmentDao;
-import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentDto;
+import ma.youcode.rentalhive.model.dto.equipmentDto.EquipmentResponseDto;
 import ma.youcode.rentalhive.model.domaine.entities.Category;
 import ma.youcode.rentalhive.model.domaine.entities.Equipment;
 import ma.youcode.rentalhive.model.domaine.entities.Manufacturer;
@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -48,18 +46,18 @@ public class EquipmentServiceImpl implements EquipmentService {
         return equipmentDao.save(equipment);
     }
     @Override
-    public Equipment updateEquipment(Long id, EquipmentDto equipmentDto) {
+    public Equipment updateEquipment(Long id, EquipmentResponseDto equipmentResponseDto) {
         Equipment equipment = new Equipment();
         equipment.setId(id);
-        equipment.setName(equipmentDto.name());
-        equipment.setPricePerDay(equipmentDto.pricePerDay());
-        equipment.setQuantity(equipmentDto.quantity());
-        equipment.setPricePerDay(equipmentDto.pricePerDay());
+        equipment.setName(equipmentResponseDto.name());
+        equipment.setPricePerDay(equipmentResponseDto.pricePerDay());
+        equipment.setQuantity(equipmentResponseDto.quantity());
+        equipment.setPricePerDay(equipmentResponseDto.pricePerDay());
         Category category1 = new Category();
-        category1.setId(equipmentDto.category().id());
+        category1.setId(equipmentResponseDto.category().id());
         equipment.setCategory(category1);
         Manufacturer manufacturer1 = new Manufacturer();
-        manufacturer1.setManufacturer(equipmentDto.manufacturerName());
+        manufacturer1.setManufacturer(equipmentResponseDto.manufacturerName());
         equipment.setManufacturer(manufacturer1);
 
         Category category = checkCategoryIfExistForCreateEquipment(equipment.getCategory().getId());
@@ -124,20 +122,4 @@ public class EquipmentServiceImpl implements EquipmentService {
     public void validateEquipment() {
 
     }
-//    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
-//        String FOLDER_PATH = "C:upload\" + file.getOriginalFilename();
-//        String filePath= FOLDER_PATH + file.getOriginalFilename();
-//        FileData data = FileData.builder()
-//                .type(typeFile.photo.toString())
-//                .filePath(filePath).build();
-//
-//        FileData fileData=fileDataRepository.save(data);
-//
-//        file.transferTo(new File(FOLDER_PATH));
-//
-//        if (fileData.getId() != null) {
-//            return "file uploaded successfully : " + filePath;
-//        }
-//        return null;
-//    }
 }
